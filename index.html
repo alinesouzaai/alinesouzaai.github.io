@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aline — IA Humanizada</title>
+
+    <!-- Tailwind (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- React 18 (UMD) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- Babel (para transpilar JSX no navegador) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body class="bg-white text-gray-900">
+    <div id="root"></div>
+
+    <!-- Landing completa (JSX) -->
+    <script type="text/babel">
+      // ===== COMPONENTES =====
+
+      function Card({ title, desc, bullets, ctaLabel }) {
+        return (
+          <div className="border rounded-3xl p-6 flex flex-col justify-between bg-white shadow-sm">
+            <div>
+              <h3 className="font-medium text-lg">{title}</h3>
+              <p className="text-sm text-gray-600 mt-1">{desc}</p>
+              <ul className="mt-4 space-y-2 text-gray-700">
+                {bullets.map((b, i) => (
+                  <li key={i} className="flex gap-2">
+                    <span>•</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <a
+              href="#contact"
+              className="mt-6 inline-flex rounded-2xl px-4 py-2 bg-black text-white text-sm w-fit hover:opacity-90"
+            >
+              {ctaLabel}
+            </a>
+          </div>
+        );
+      }
+
+      function PackageCard({ name, desc, featured }) {
+        return (
+          <div
+            className={`border rounded-3xl p-6 bg-white ${
+              featured ? "shadow-md ring-1 ring-black/5" : "shadow-sm"
+            }`}
+          >
+            <div className="flex items-baseline justify-between">
+              <h3 className="font-semibold text-xl">{name}</h3>
+              {featured && (
+                <span className="text-xs px-2 py-1 rounded-full border">Popular</span>
+              )}
+            </div>
+            <p className="mt-1 text-gray-600">{desc}</p>
+            <a
+              href="#contact"
+              className="mt-6 inline-flex rounded-2xl px-4 py-2 bg-black text-white text-sm w-fit hover:opacity-90"
+            >
+              Solicitar proposta
+            </a>
+          </div>
+        );
+      }
+
+      // ===== LANDING =====
+      function LandingAline() {
+        const [lang, setLang] = React.useState("pt");
+
+        const t = React.useMemo(() => {
+          const dict = {
+            pt: {
+              brand: "Aline — IA Humanizada",
+              nav: {
+                why: "Filosofia",
+                services: "Serviços",
+                packages: "Pacotes",
+                masterclass: "Masterclass",
+                mentoring: "Mentoria",
+                contact: "Contato",
+              },
+              hero: {
+                pre: "Estratégia • Governança • Valor",
+                title: "IA humanizada para líderes que buscam impacto real.",
+                subtitle:
+                  "Eu ajudo organizações a transformar visão em resultados — com gente no centro, dados bem cuidados e decisões que resistem ao tempo.",
+                cta1: "Agendar conversa",
+                cta2: "Baixar credenciais",
+              },
+              why: {
+                title: "Minha filosofia",
+                items: [
+                  "Pessoas antes de modelos: a tecnologia é meio, não fim.",
+                  "Clareza estratégica: problema bem definido, metade resolvido.",
+                  "Governança elegante: simples o suficiente para escalar.",
+                ],
+              },
+              ribbons: ["MLOps Oslo", "Rural Talks Podcast", "WiDS Oslo"],
+              services: {
+                title: "Serviços principais",
+                a: {
+                  title: "Retainer de IA Estratégica",
+                  desc: "Direção, governança e priorização. Ritmo executivo para fazer a IA acontecer com elegância.",
+                  bullets: ["Roadmap claro", "OKRs trimestrais", "Adoção > hype"],
+                },
+                b: {
+                  title: "Programa ML Canvas → Valor",
+                  desc: "Da hipótese ao plano de escala, com experimento responsável e critérios de go/no-go.",
+                  bullets: [
+                    "Alinhamento executivo",
+                    "Experimento 2–4 semanas",
+                    "Plano de escala",
+                  ],
+                },
+                c: {
+                  title: "Workshop Executivo",
+                  desc: "1 dia para alinhar visão, cultura e medidas de sucesso. Decisões práticas para os próximos 90 dias.",
+                  bullets: [
+                    "Cultura & estratégia",
+                    "Governança mínima viável",
+                    "Próximos passos",
+                  ],
+                },
+                d: {
+                  title: "Assessment de Modelos & Risco",
+                  desc: "Leitura independente de compliance, bias e robustez. Recomendações acionáveis e desenho de mitigação.",
+                  bullets: [
+                    "Checklist de conformidade",
+                    "Riscos priorizados",
+                    "Plano de mitigação",
+                  ],
+                },
+                e: {
+                  title: "Treinamento Corporativo",
+                  desc: "Trilhas sob medida para times de dados, risco e auditoria. Mão na massa com seus dados.",
+                  bullets: [
+                    "Frameworks práticos",
+                    "Templates & playbooks",
+                    "Certificado",
+                  ],
+                },
+                cta: "Solicitar proposta",
+              },
+              packages: {
+                title: "Pacotes-assinatura",
+                starter: {
+                  name: "Starter",
+                  desc: "1 dia de descoberta e mapeamento do caso crítico para destravar decisões.",
+                },
+                pro: {
+                  name: "Pro",
+                  desc: "4 semanas para sair com plano de piloto, dono, métricas e próximos passos.",
+                },
+                enterprise: {
+                  name: "Enterprise",
+                  desc: "8 semanas com experimento, governança e critérios de escala — sem improviso.",
+                },
+                note: "Fechamento via SOW com escopo e cronograma.",
+              },
+              masterclass: {
+                title: "Masterclass ML Canvas (3h, ao vivo)",
+                date: "17/09/2025 — 18:00–21:00 (Oslo)",
+                bullets: [
+                  "Canvas preenchido para 1 caso real",
+                  "Playbook de experimento (2–4 semanas)",
+                  "Checklist de governança",
+                  "Critérios de go/no-go",
+                ],
+                badge: "Vagas limitadas",
+                cta: "Aplicar para a turma",
+              },
+              mentoring: {
+                title: "Mentoria 1:1 — Carreira em IA (60 min)",
+                desc: "Sessão estratégica e direta ao ponto para definir seus próximos 90 dias.",
+                note: "Agenda mensal com vagas limitadas.",
+                cta: "Reservar sessão",
+              },
+              contact: {
+                title: "Vamos começar?",
+                sub: "Atendimento global (PT/EN/ES) — base em Oslo",
+                steps: ["Conversa de 30 min", "SOW com entregáveis", "Kick-off"],
+                cta: "Falar comigo",
+              },
+              footer: { rights: "© " },
+              toggles: { language: "Idioma" },
+            },
+            en: {
+              brand: "Aline — Human-Centered AI",
+              nav: {
+                why: "Philosophy",
+                services: "Services",
+                packages: "Packages",
+                masterclass: "Masterclass",
+                mentoring: "Mentoring",
+                contact: "Contact",
+              },
+              hero: {
+                pre: "Strategy • Governance • Value",
+                title: "Human-centered AI for leaders who want real impact.",
+                subtitle:
+                  "I help organizations turn vision into outcomes — with people at the center, well-governed data, and decisions that last.",
+                cta1: "Book a call",
+                cta2: "Download creds",
+              },
+              why: {
+                title: "My philosophy",
+                items: [
+                  "People before models: technology is the means, not the end.",
+                  "Strategic clarity: a well-framed problem is half solved.",
+                  "Elegant governance: simple enough to scale.",
+                ],
+              },
+              ribbons: ["MLOps Oslo", "Rural Talks Podcast", "WiDS Oslo"],
+              services: {
+                title: "Core services",
+                a: {
+                  title: "Strategic AI Retainer",
+                  desc: "Direction, governance and prioritization. Executive rhythm to make AI happen with elegance.",
+                  bullets: ["Clear roadmap", "Quarterly OKRs", "Adoption over hype"],
+                },
+                b: {
+                  title: "ML Canvas → Value Program",
+                  desc: "From hypothesis to scale plan with responsible experimentation and go/no-go criteria.",
+                  bullets: [
+                    "Executive alignment",
+                    "2–4 week experiment",
+                    "Scale plan",
+                  ],
+                },
+                c: {
+                  title: "Executive Workshop",
+                  desc: "One day to align vision, culture and success measures. Practical decisions for the next 90 days.",
+                  bullets: [
+                    "Culture & strategy",
+                    "Minimum viable governance",
+                    "Next steps",
+                  ],
+                },
+                d: {
+                  title: "Model & Risk Assessment",
+                  desc: "Independent read on compliance, bias and robustness. Actionable recommendations and mitigation design.",
+                  bullets: [
+                    "Compliance checklist",
+                    "Prioritized risks",
+                    "Mitigation plan",
+                  ],
+                },
+                e: {
+                  title: "Corporate Training",
+                  desc: "Tailored tracks for data, risk and audit teams. Hands-on with your data.",
+                  bullets: [
+                    "Practical frameworks",
+                    "Templates & playbooks",
+                    "Certificate",
+                  ],
+                },
+                cta: "Request proposal",
+              },
+              packages: {
+                title: "Signature packages",
+                starter: {
+                  name: "Starter",
+                  desc: "1-day discovery & case mapping to unlock decisive moves.",
+                },
+                pro: {
+                  name: "Pro",
+                  desc: "4 weeks to a pilot plan with owner, metrics and next steps.",
+                },
+                enterprise: {
+                  name: "Enterprise",
+                  desc: "8 weeks with experiment, governance and scale criteria — no guesswork.",
+                },
+                note: "Engagements formalized via SOW with scope and timeline.",
+              },
+              masterclass: {
+                title: "ML Canvas Masterclass (3h, live)",
+                date: "Sept 17, 2025 — 18:00–21:00 (Oslo)",
+                bullets: [
+                  "Canvas filled for 1 real case",
+                  "2–4 week experiment playbook",
+                  "Governance checklist",
+                  "Go/no-go criteria",
+                ],
+                badge: "Limited seats",
+                cta: "Apply to join",
+              },
+              mentoring: {
+                title: "1:1 Mentoring — AI Career (60 min)",
+                desc: "Strategic, straight-to-the-point session to define your next 90 days.",
+                note: "Monthly availability with limited slots.",
+                cta: "Book session",
+              },
+              contact: {
+                title: "Shall we begin?",
+                sub: "Global availability (PT/EN/ES) — based in Oslo",
+                steps: ["30-min conversation", "SOW with deliverables", "Kick-off"],
+                cta: "Message me",
+              },
+              footer: { rights: "© " },
+              toggles: { language: "Language" },
+            },
+          };
+          return dict[lang];
+        }, [lang]);
+
+        return (
+          <div className="min-h-screen bg-white text-gray-900">
+            {/* Header */}
+            <header className="sticky top-0 z-30 backdrop-blur bg-white/80 border-b">
+              <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+                <a href="#" className="font-semibold text-lg tracking-tight">
+                  {t.brand}
+                </a>
+                <nav className="hidden md:flex gap-6 text-sm">
+                  <a href="#why" className="hover:opacity-70">
+                    {t.nav.why}
+                  </a>
+                  <a href="#services" className="hover:opacity-70">
+                    {t.nav.services}
+                  </a>
+                  <a href="#packages" className="hover:opacity-70">
+                    {t.nav.packages}
+                  </a>
+                  <a href="#masterclass" className="hover:opacity-70">
+                    {t.nav.masterclass}
+                  </a>
+                  <a href="#mentoring" className="hover:opacity-70">
+                    {t.nav.mentoring}
+                  </a>
+                  <a href="#contact" className="hover:opacity-70">
+                    {t.nav.contact}
+                  </a>
+                </nav>
+                <div className="flex items-center gap-2">
+                  {/* Language toggle */}
+                  <select
+                    aria-label={t.toggles.language}
+                    className="border rounded-lg px-2 py-1 text-sm"
+                    value={lang}
+                    onChange={(e) => setLang(e.target.value)}
+                  >
+                    <option value="pt">PT</option>
+                    <option value="en">EN</option>
+                  </select>
+                  <a
+                    href="#contact"
+                    className="ml-2 inline-flex items-center rounded-xl px-3 py-2 bg-black text-white text-sm hover:opacity-90"
+                  >
+                    {t.hero.cta1}
+                  </a>
+                </div>
+              </div>
+            </header>
+
+            {/* Hero */}
+            <section className="relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100" />
+              <div className="relative max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
+                <div>
+                  <p className="uppercase tracking-widest text-xs text-gray-600">
+                    {t.hero.pre}
+                  </p>
+                  <h1 className="mt-2 text-4xl md:text-5xl font-semibold leading-tight">
+                    {t.hero.title}
+                  </h1>
+                  <p className="mt-5 text-lg text-gray-700 max-w-xl">
+                    {t.hero.subtitle}
+                  </p>
+                  <div className="mt-7 flex gap-3">
+                    <a
+                      href="#contact"
+                      className="rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
+                    >
+                      {t.hero.cta1}
+                    </a>
+                    <a
+                      href="#"
+                      className="rounded-2xl px-5 py-3 border hover:bg-gray-50"
+                    >
+                      {t.hero.cta2}
+                    </a>
+                  </div>
+                </div>
+                {/* Card de filosofia com id para ancoragem */}
+                <div
+                  id="why"
+                  className="p-6 border rounded-3xl shadow-sm bg-white/70 backdrop-blur"
+                >
+                  <h3 className="font-medium">{t.why.title}</h3>
+                  <ul className="mt-3 space-y-2 text-gray-700">
+                    {t.why.items.map((it, i) => (
+                      <li key={i} className="flex gap-2">
+                        <span>•</span>
+                        <span>{it}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            {/* Ribbons / prova social */}
+            <section className="border-t">
+              <div className="max-w-6xl mx-auto px-4 py-6 flex flex-wrap items-center gap-6 text-xs uppercase tracking-widest text-gray-500">
+                {t.ribbons.map((r, i) => (
+                  <span key={i} className="px-3 py-2 rounded-full border bg-white">
+                    {r}
+                  </span>
+                ))}
+              </div>
+            </section>
+
+            {/* Services */}
+            <section id="services" className="border-t">
+              <div className="max-w-6xl mx-auto px-4 py-14">
+                <h2 className="text-2xl md:text-3xl font-semibold">
+                  {t.services.title}
+                </h2>
+                <div className="grid md:grid-cols-3 gap-6 mt-8">
+                  <Card
+                    title={t.services.a.title}
+                    desc={t.services.a.desc}
+                    bullets={t.services.a.bullets}
+                    ctaLabel={t.services.cta}
+                  />
+                  <Card
+                    title={t.services.b.title}
+                    desc={t.services.b.desc}
+                    bullets={t.services.b.bullets}
+                    ctaLabel={t.services.cta}
+                  />
+                  <Card
+                    title={t.services.c.title}
+                    desc={t.services.c.desc}
+                    bullets={t.services.c.bullets}
+                    ctaLabel={t.services.cta}
+                  />
+                  <Card
+                    title={t.services.d.title}
+                    desc={t.services.d.desc}
+                    bullets={t.services.d.bullets}
+                    ctaLabel={t.services.cta}
+                  />
+                  <Card
+                    title={t.services.e.title}
+                    desc={t.services.e.desc}
+                    bullets={t.services.e.bullets}
+                    ctaLabel={t.services.cta}
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* Packages */}
+            <section id="packages" className="border-t bg-gray-50">
+              <div className="max-w-6xl mx-auto px-4 py-14">
+                <h2 className="text-2xl md:text-3xl font-semibold">
+                  {t.packages.title}
+                </h2>
+                <div className="grid md:grid-cols-3 gap-6 mt-8">
+                  <PackageCard
+                    name={t.packages.starter.name}
+                    desc={t.packages.starter.desc}
+                  />
+                  <PackageCard
+                    name={t.packages.pro.name}
+                    desc={t.packages.pro.desc}
+                    featured
+                  />
+                  <PackageCard
+                    name={t.packages.enterprise.name}
+                    desc={t.packages.enterprise.desc}
+                  />
+                </div>
+                <p className="text-sm text-gray-600 mt-4">{t.packages.note}</p>
+              </div>
+            </section>
+
+            {/* Masterclass */}
+            <section id="masterclass" className="border-t">
+              <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-semibold">
+                    {t.masterclass.title}
+                  </h2>
+                  <p className="mt-1 text-gray-700">{t.masterclass.date}</p>
+                  <ul className="mt-4 space-y-2 text-gray-700">
+                    {t.masterclass.bullets.map((b, i) => (
+                      <li key={i} className="flex gap-2">
+                        <span>•</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-6 flex gap-3 items-center">
+                    <span className="inline-flex items-center px-4 py-2 rounded-2xl border text-sm bg-white">
+                      {t.masterclass.badge}
+                    </span>
+                    <a
+                      href="#"
+                      className="rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
+                    >
+                      {t.masterclass.cta}
+                    </a>
+                  </div>
+                </div>
+                <div className="p-6 border rounded-3xl shadow-sm bg-gradient-to-br from-gray-50 to-white">
+                  <h3 className="font-medium">Agenda</h3>
+                  <ol className="mt-3 space-y-2 text-gray-700 list-decimal list-inside">
+                    <li>Fundamentos e anti-padrões</li>
+                    <li>ML Canvas na prática</li>
+                    <li>Mão na massa: seu caso real</li>
+                    <li>Governança e risco</li>
+                    <li>Critérios de go/no-go</li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+
+            {/* Mentoring */}
+            <section id="mentoring" className="border-t bg-gray-50">
+              <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-semibold">
+                    {t.mentoring.title}
+                  </h2>
+                  <p className="mt-2 text-gray-700">{t.mentoring.desc}</p>
+                  <p className="mt-1 text-gray-600 text-sm">{t.mentoring.note}</p>
+                  <div className="mt-6 flex gap-3 items-center">
+                    <a
+                      href="#"
+                      className="rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
+                    >
+                      {t.mentoring.cta}
+                    </a>
+                  </div>
+                </div>
+                <div className="p-6 border rounded-3xl shadow-sm bg-white">
+                  <h3 className="font-medium">Pré-work</h3>
+                  <ul className="mt-3 space-y-2 text-gray-700">
+                    <li>• Objetivos dos próximos 90 dias</li>
+                    <li>• Desafios atuais e bloqueios</li>
+                    <li>• Perfil/LinkedIn e histórico</li>
+                    <li>• Expectativas da sessão</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            {/* Contact */}
+            <section id="contact" className="border-t">
+              <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-semibold">
+                    {t.contact.title}
+                  </h2>
+                  <p className="mt-2 text-gray-700">{t.contact.sub}</p>
+                  <form className="mt-6 grid gap-3 max-w-md">
+                    <input
+                      className="border rounded-xl px-4 py-3"
+                      placeholder={lang === "pt" ? "Nome" : "Name"}
+                    />
+                    <input className="border rounded-xl px-4 py-3" placeholder="Email" />
+                    <textarea
+                      className="border rounded-xl px-4 py-3"
+                      placeholder={lang === "pt" ? "Mensagem" : "Message"}
+                      rows="4"
+                    />
+                    <button
+                      type="button"
+                      className="rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
+                    >
+                      {t.contact.cta}
+                    </button>
+                    <p className="text-xs text-gray-500">
+                      * LinkedIn/Instagram DM também funciona.
+                    </p>
+                  </form>
+                </div>
+                <div className="p-6 border rounded-3xl shadow-sm bg-gray-50">
+                  <h3 className="font-medium">Próximos passos</h3>
+                  <ol className="mt-3 space-y-2 text-gray-700 list-decimal list-inside">
+                    {t.contact.steps.map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ol>
+                  <a
+                    href="#"
+                    className="mt-4 inline-flex rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
+                  >
+                    {t.hero.cta1}
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            <footer className="border-t">
+              <div className="max-w-6xl mx-auto px-4 py-10 text-sm text-gray-600 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+                <div>
+                  {t.footer.rights} {new Date().getFullYear()} Aline da Silva Souza. All rights reserved.
+                </div>
+                <div className="flex gap-4">
+                  <a href="#" className="hover:opacity-70">Privacy</a>
+                  <a href="#" className="hover:opacity-70">Terms</a>
+                  <a href="#" className="hover:opacity-70">LinkedIn</a>
+                  <a href="#" className="hover:opacity-70">Instagram</a>
+                </div>
+              </div>
+            </footer>
+          </div>
+        );
+      }
+
+      // ===== RENDER =====
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<LandingAline />);
+    </script>
+  </body>
+</html>
