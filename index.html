@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Aline - Human-Centered AI</title>
+    <title>Aline — Human-Centered AI</title>
 
     <link rel="icon" type="image/png" href="./assets/brand/favicon.png" />
 
@@ -17,21 +17,31 @@
     <!-- Babel (JSX no navegador) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Theme: modern executive (less rounded) -->
+    <!-- Executive Light/Dark Mix (neon accents) -->
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
               ink: "#0B0F1A",
-              sub: "rgba(11,15,26,.72)",
-              line: "rgba(11,15,26,.10)",
-              soft: "#F6F7FB",
-              accent: "#2D6BFF"
+              paper: "#F7F8FC",
+              panel: "rgba(255,255,255,.78)",
+              panel2: "rgba(255,255,255,.62)",
+              line: "rgba(11,15,26,.12)",
+              sub: "rgba(11,15,26,.70)",
+              dark: "#060915",
+              dark2: "#0B1024",
+              w: "rgba(255,255,255,.92)",
+              wsub: "rgba(255,255,255,.75)",
+              wline: "rgba(255,255,255,.14)",
+              neonA: "#2EF2FF",
+              neonB: "#6A5CFF",
+              neonC: "#22D3A6"
             },
             boxShadow: {
-              soft: "0 10px 30px rgba(11,15,26,.06)",
-              soft2: "0 18px 50px rgba(11,15,26,.08)"
+              soft: "0 18px 60px rgba(11,15,26,.10)",
+              soft2: "0 30px 80px rgba(11,15,26,.14)",
+              glow: "0 0 0 1px rgba(46,242,255,.18), 0 18px 60px rgba(0,0,0,.25)"
             },
             borderRadius: {
               xl: "14px",
@@ -45,48 +55,103 @@
 
     <style>
       :root { color-scheme: light; }
-      body { background: #F6F7FB; }
+      html, body { height: 100%; }
 
-      .panel{
-        background: rgba(255,255,255,.86);
-        border: 1px solid rgba(11,15,26,.10);
-        backdrop-filter: blur(10px);
+      /* Overall: light executive canvas + dark hero */
+      body{
+        background:
+          radial-gradient(900px 520px at 14% 0%, rgba(106,92,255,.12), transparent 55%),
+          radial-gradient(900px 520px at 92% 10%, rgba(46,242,255,.10), transparent 55%),
+          radial-gradient(900px 520px at 62% 110%, rgba(34,211,166,.09), transparent 55%),
+          #F7F8FC;
+        color: #0B0F1A;
       }
 
-      .btn-primary{ background:#0B0F1A; color:#fff; }
-      .btn-primary:hover{ opacity:.92; }
+      .hairline{ border: 1px solid rgba(11,15,26,.12); }
+      .muted{ color: rgba(11,15,26,.70); }
+
+      /* Glass panel on light */
+      .panel{
+        background: rgba(255,255,255,.78);
+        border: 1px solid rgba(11,15,26,.12);
+        backdrop-filter: blur(12px);
+      }
+      .panel:hover{ border-color: rgba(46,242,255,.22); }
+
+      /* Dark panels (used in hero) */
+      .panelDark{
+        background: rgba(6,9,21,.62);
+        border: 1px solid rgba(255,255,255,.14);
+        backdrop-filter: blur(14px);
+      }
+      .panelDark:hover{ border-color: rgba(46,242,255,.24); }
+
+      .btn-primary{
+        background: linear-gradient(90deg, rgba(46,242,255,.95), rgba(106,92,255,.95));
+        color: #060915;
+        box-shadow: 0 12px 34px rgba(46,242,255,.10);
+      }
+      .btn-primary:hover{ opacity:.96; }
 
       .btn-ghost{
         background: transparent;
-        border: 1px solid rgba(11,15,26,.16);
+        border: 1px solid rgba(11,15,26,.18);
         color:#0B0F1A;
       }
-      .btn-ghost:hover{ background: rgba(11,15,26,.04); }
+      .btn-ghost:hover{ background: rgba(11,15,26,.04); border-color: rgba(46,242,255,.24); }
 
-      .link:hover{ opacity:.78; }
-
-      /* substitui sua "hairline" */
-      .hairline{
-        border: 1px solid rgba(11,15,26,.14);
+      .btn-ghostOnDark{
+        background: transparent;
+        border: 1px solid rgba(255,255,255,.20);
+        color: rgba(255,255,255,.90);
       }
+      .btn-ghostOnDark:hover{ background: rgba(255,255,255,.08); border-color: rgba(46,242,255,.26); }
+
+      .link:hover{ opacity:.82; }
+
+      .kicker{
+        background: linear-gradient(90deg, rgba(46,242,255,.95), rgba(34,211,166,.95));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .titleGlow{ text-shadow: 0 0 22px rgba(46,242,255,.14); }
+
+      /* Section divider */
+      .divider{ border-top: 1px solid rgba(11,15,26,.10); }
+
+      /* Subtle “executive” corners (less round) */
+      .rXl{ border-radius: 14px; }
+      .rLg{ border-radius: 12px; }
+      .rMd{ border-radius: 10px; }
     </style>
   </head>
 
-  <body class="text-ink">
+  <body>
     <div id="root"></div>
 
     <script type="text/babel">
+      function Img(props) {
+        return (
+          <img
+            {...props}
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
+          />
+        );
+      }
+
       function Card({ title, desc, bullets, cta, ctaHref="#contact" }) {
         return (
-          <div className="panel rounded-xl p-6 shadow-soft flex flex-col justify-between">
+          <div className="panel rXl p-6 shadow-soft flex flex-col justify-between">
             <div>
               <h3 className="font-semibold text-lg tracking-tight">{title}</h3>
-              <p className="mt-2 text-sm text-[color:rgba(11,15,26,.72)]">{desc}</p>
+              <p className="mt-2 text-sm muted">{desc}</p>
               {bullets?.length ? (
                 <ul className="mt-4 space-y-2 text-sm text-ink/80">
                   {bullets.map((b, i) => (
                     <li key={i} className="flex gap-2">
-                      <span className="text-ink/50">•</span>
+                      <span className="text-ink/40">•</span>
                       <span>{b}</span>
                     </li>
                   ))}
@@ -94,7 +159,7 @@
               ) : null}
             </div>
 
-            <a href={ctaHref} className="mt-6 inline-flex w-fit rounded-lg px-4 py-2 btn-primary text-sm">
+            <a href={ctaHref} className="mt-6 inline-flex w-fit rLg px-4 py-2 btn-primary text-sm font-medium">
               {cta}
             </a>
           </div>
@@ -109,15 +174,9 @@
         );
       }
 
-      // render seguro de iframe (Spotify/YouTube)
       function Embed({ html }) {
         if (!html) return null;
-        return (
-          <div
-            className="mt-4"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-        );
+        return <div className="mt-4" dangerouslySetInnerHTML={{ __html: html }} />;
       }
 
       function Landing() {
@@ -240,55 +299,39 @@
 
         const t = dict[lang];
 
-        // atualiza <html lang="">
         React.useEffect(() => {
           document.documentElement.lang = lang === "pt" ? "pt" : "en";
         }, [lang]);
 
-        // LINKS EXTERNOS
         const linkedinUrl = "https://www.linkedin.com/in/alinedatascientist/";
 
-        // Artigos (adicione aqui os seus links)
+        // Add your LinkedIn article links here
         const articles = [
-          // { title: "AI Governance That Ships: ML Canvas as the Bridge Between Risk and Real Value", url: "COLE_O_LINK_DO_POST" },
+          // { title: "AI Governance That Ships: ML Canvas as the Bridge Between Risk and Real Value", url: "PASTE_LINKEDIN_ARTICLE_URL" },
         ];
 
-        // EMBEDS (cole o iframe completo aqui como string)
-        const spotifyEmbed = null; // ex: '<iframe style="border-radius:12px" src="..." width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>'
-        const youtubeEmbed = null; // ex: '<iframe width="100%" height="315" src="..." title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+        // Paste the full iframe as a string (Spotify/YouTube)
+        const spotifyEmbed = null;
+        const youtubeEmbed = null;
 
-        // IMAGENS (com fallback caso não exista)
         const heroImg = "./assets/img/hero-01.jpg";
         const mentoringImg = "./assets/img/mentoring-01.jpg";
         const speaker1 = "./assets/img/speaker-01.jpg";
         const speaker2 = "./assets/img/speaker-02.jpg";
 
-        const Img = (props) => (
-          <img
-            {...props}
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
-          />
-        );
-
         return (
           <div className="min-h-screen">
-            {/* Header */}
-            <header className="sticky top-0 z-40 border-b border-line bg-white/80 backdrop-blur">
+            {/* Header (light glass) */}
+            <header className="sticky top-0 z-40 divider bg-[rgba(247,248,252,.72)] backdrop-blur">
               <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
                 <a href="#" className="flex items-center gap-3">
-                  <img
-                    src="./assets/brand/logo-light.png"
-                    alt="Aline Data Scientist"
-                    className="h-8 w-auto"
-                  />
-                  <span className="hidden sm:block font-semibold tracking-tight">
+                  <img src="./assets/brand/logo-light.png" alt="Aline" className="h-8 w-auto" />
+                  <span className="hidden sm:block font-semibold tracking-tight text-ink">
                     {t.brand}
                   </span>
                 </a>
 
-                <nav className="hidden md:flex items-center gap-6 text-sm text-ink/80">
+                <nav className="hidden md:flex items-center gap-6 text-sm text-ink/70">
                   <a className="link" href="#services">{t.nav.services}</a>
                   <a className="link" href="#mentoring">{t.nav.mentoring}</a>
                   <a className="link" href="#speaking">{t.nav.speaking}</a>
@@ -300,7 +343,7 @@
                 <div className="flex items-center gap-2">
                   <select
                     aria-label={t.labels.language}
-                    className="hairline rounded-md px-2 py-2 text-sm bg-white"
+                    className="hairline rMd px-2 py-2 text-sm bg-white"
                     value={lang}
                     onChange={(e) => setLang(e.target.value)}
                   >
@@ -308,41 +351,43 @@
                     <option value="pt">PT</option>
                   </select>
 
-                  <a href="#contact" className="hidden sm:inline-flex rounded-lg px-4 py-2 btn-primary text-sm">
+                  <a href="#contact" className="hidden sm:inline-flex rLg px-4 py-2 btn-primary text-sm font-medium">
                     {t.hero.cta1}
                   </a>
                 </div>
               </div>
             </header>
 
-            {/* HERO */}
+            {/* HERO (dark couture) */}
             <section className="relative overflow-hidden">
               <div className="absolute inset-0">
-                <Img
-                  src={heroImg}
-                  alt=""
-                  className="h-full w-full object-cover"
+                <div
+                  className="h-full w-full"
+                  style={{
+                    background:
+                      "radial-gradient(1100px 540px at 18% -10%, rgba(106,92,255,.28), transparent 55%)," +
+                      "radial-gradient(900px 520px at 90% 12%, rgba(46,242,255,.18), transparent 55%)," +
+                      "radial-gradient(900px 520px at 55% 110%, rgba(34,211,166,.14), transparent 55%)," +
+                      "linear-gradient(180deg, rgba(6,9,21,.96), rgba(11,16,36,.92))"
+                  }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/45 to-black/75"></div>
-                <div className="absolute -top-20 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-400/20 blur-3xl"></div>
+                <Img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover opacity-22 mix-blend-screen" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#060915]/82 via-[#0B1024]/62 to-[#060915]/88"></div>
               </div>
 
-              <div className="relative max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center text-white">
-                <div>
-                  <p className="uppercase tracking-widest text-xs text-white/70">{t.hero.pre}</p>
-                  <h1 className="mt-2 text-4xl md:text-5xl font-semibold leading-tight">{t.hero.title}</h1>
+              <div className="relative max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
+                <div className="text-white">
+                  <p className="uppercase tracking-widest text-xs text-white/70 kicker">{t.hero.pre}</p>
+                  <h1 className="mt-2 text-4xl md:text-5xl font-semibold leading-tight titleGlow">
+                    {t.hero.title}
+                  </h1>
                   <p className="mt-5 text-lg text-white/80 max-w-xl">{t.hero.subtitle}</p>
 
                   <div className="mt-7 flex gap-3 flex-wrap">
-                    <a href="#contact" className="rounded-lg px-5 py-3 bg-white text-black hover:opacity-90">
+                    <a href="#contact" className="rLg px-5 py-3 btn-primary">
                       {t.hero.cta1}
                     </a>
-                    <a
-                      href={linkedinUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="rounded-lg px-5 py-3 border border-white/30 hover:bg-white/10"
-                    >
+                    <a href={linkedinUrl} target="_blank" rel="noreferrer" className="rLg px-5 py-3 btn-ghostOnDark">
                       {t.hero.cta2}
                     </a>
                   </div>
@@ -350,29 +395,41 @@
                   <div className="mt-8 grid gap-2 text-sm text-white/75">
                     {t.philosophy.items.map((it, i) => (
                       <div key={i} className="flex gap-2">
-                        <span className="text-white/50">•</span><span>{it}</span>
+                        <span className="text-white/40">•</span><span>{it}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="panel rounded-xl p-6 shadow-soft2 bg-white/10 border border-white/15 backdrop-blur">
-                  <img src="./assets/brand/logo-dark.png" alt="Aline Data Scientist" className="h-20 w-auto" />
-                  <h3 className="mt-4 font-semibold">{t.philosophy.title}</h3>
-                  <ul className="mt-3 space-y-2 text-white/80 text-sm">
+                <div className="panelDark rXl p-6 shadow-glow">
+                  <div className="flex items-center justify-between">
+                    <img src="./assets/brand/logo-dark.png" alt="Aline" className="h-12 w-auto opacity-95" />
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-[rgba(46,242,255,.95)]"></div>
+                      <div className="h-2 w-2 rounded-full bg-[rgba(106,92,255,.95)]"></div>
+                      <div className="h-2 w-2 rounded-full bg-[rgba(34,211,166,.95)]"></div>
+                    </div>
+                  </div>
+
+                  <h3 className="mt-4 font-semibold text-white/90">{t.philosophy.title}</h3>
+                  <ul className="mt-3 space-y-2 text-white/78 text-sm">
                     {t.philosophy.items.map((it, i) => (
                       <li key={i} className="flex gap-2">
-                        <span className="text-white/50">•</span>
+                        <span className="text-white/35">•</span>
                         <span>{it}</span>
                       </li>
                     ))}
                   </ul>
+
+                  <div className="mt-6 text-xs text-white/55">
+                    {lang === "en" ? "Oslo-based • Global delivery" : "Base em Oslo • Atendimento global"}
+                  </div>
                 </div>
               </div>
             </section>
 
-            {/* SERVICES */}
-            <section id="services" className="border-t border-line">
+            {/* SERVICES (light executive) */}
+            <section id="services" className="divider">
               <div className="max-w-6xl mx-auto px-4 py-14">
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.services.title}</h2>
                 <div className="grid md:grid-cols-3 gap-6 mt-8">
@@ -383,57 +440,55 @@
               </div>
             </section>
 
-            {/* MENTORING */}
-            <section id="mentoring" className="border-t border-line bg-white">
-              <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.mentoring.title}</h2>
-                  <p className="mt-3 text-ink/75">{t.mentoring.desc}</p>
-                  <ul className="mt-5 space-y-2 text-sm text-ink/80">
-                    {t.mentoring.bullets.map((b, i) => (
-                      <li key={i} className="flex gap-2">
-                        <span className="text-ink/40">•</span><span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <a href="#contact" className="mt-6 inline-flex rounded-lg px-5 py-3 btn-primary text-sm">
-                    {t.mentoring.cta}
-                  </a>
-                </div>
+            {/* MENTORING (dark band, then light content) */}
+            <section id="mentoring" className="divider">
+              <div className="bg-gradient-to-br from-[#060915] via-[#0B1024] to-[#060915]">
+                <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
+                  <div className="text-white">
+                    <h2 className="text-2xl md:text-3xl font-semibold tracking-tight titleGlow">{t.mentoring.title}</h2>
+                    <p className="mt-3 text-white/78">{t.mentoring.desc}</p>
+                    <ul className="mt-5 space-y-2 text-sm text-white/78">
+                      {t.mentoring.bullets.map((b, i) => (
+                        <li key={i} className="flex gap-2">
+                          <span className="text-white/35">•</span><span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <a href="#contact" className="mt-6 inline-flex rLg px-5 py-3 btn-primary text-sm font-medium">
+                      {t.mentoring.cta}
+                    </a>
+                  </div>
 
-                <div className="panel rounded-xl p-6 shadow-soft">
-                  <Img
-                    src={mentoringImg}
-                    alt="Mentoring"
-                    className="w-full h-56 object-cover rounded-lg border border-line"
-                  />
-                  <p className="mt-4 text-sm text-ink/70">
-                    {lang === "en"
-                      ? "Mentoring is a structured conversation: clarity, positioning, and a 90-day execution plan."
-                      : "A mentoria é uma conversa estruturada: clareza, posicionamento e um plano de execução de 90 dias."}
-                  </p>
+                  <div className="panelDark rXl p-6 shadow-glow">
+                    <Img src={mentoringImg} alt="Mentoring" className="w-full h-56 object-cover rLg hairline" />
+                    <p className="mt-4 text-sm text-white/70">
+                      {lang === "en"
+                        ? "Mentoring is a structured conversation: clarity, positioning, and a 90-day execution plan."
+                        : "A mentoria é uma conversa estruturada: clareza, posicionamento e um plano de execução de 90 dias."}
+                    </p>
+                  </div>
                 </div>
               </div>
             </section>
 
-            {/* SPEAKING */}
-            <section id="speaking" className="border-t border-line">
+            {/* SPEAKING (light) */}
+            <section id="speaking" className="divider">
               <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.speaking.title}</h2>
-                  <p className="mt-3 text-ink/75">{t.speaking.desc}</p>
-                  <p className="mt-2 text-sm text-ink/60">{t.speaking.proof}</p>
+                  <p className="mt-3 muted">{t.speaking.desc}</p>
+                  <p className="mt-2 text-sm text-ink/55">{t.speaking.proof}</p>
 
-                  <a href="#contact" className="mt-6 inline-flex rounded-lg px-5 py-3 btn-primary text-sm">
+                  <a href="#contact" className="mt-6 inline-flex rLg px-5 py-3 btn-primary text-sm font-medium">
                     {t.speaking.cta}
                   </a>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Img src={speaker1} alt="Speaking 1" className="w-full h-44 object-cover rounded-lg border border-line" />
-                  <Img src={speaker2} alt="Speaking 2" className="w-full h-44 object-cover rounded-lg border border-line" />
-                  <div className="col-span-2 panel rounded-xl p-5 shadow-soft">
-                    <div className="text-sm text-ink/70">
+                  <Img src={speaker1} alt="Speaking 1" className="w-full h-44 object-cover rLg hairline" />
+                  <Img src={speaker2} alt="Speaking 2" className="w-full h-44 object-cover rLg hairline" />
+                  <div className="col-span-2 panel rXl p-5 shadow-soft">
+                    <div className="text-sm muted">
                       {lang === "en"
                         ? "Add testimonials as images later (e.g., /assets/img/testimonial-01.png) and link them here."
                         : "Adicione depoimentos como imagens depois (ex.: /assets/img/testimonial-01.png) e linke aqui."}
@@ -443,54 +498,56 @@
               </div>
             </section>
 
-            {/* ARTICLES */}
-            <section id="articles" className="border-t border-line bg-white">
-              <div className="max-w-6xl mx-auto px-4 py-14">
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.articles.title}</h2>
-                <p className="mt-2 text-ink/70">{t.articles.desc}</p>
+            {/* ARTICLES (dark strip to feel premium) */}
+            <section id="articles" className="divider">
+              <div className="bg-gradient-to-br from-[#060915] via-[#0B1024] to-[#060915]">
+                <div className="max-w-6xl mx-auto px-4 py-14">
+                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-white titleGlow">{t.articles.title}</h2>
+                  <p className="mt-2 text-white/70">{t.articles.desc}</p>
 
-                <div className="mt-6 grid md:grid-cols-3 gap-6">
-                  {(articles.length ? articles : [
-                    { title: lang==="en" ? "Add your LinkedIn articles here (cards)" : "Adicione seus artigos do LinkedIn aqui (cards)", url: linkedinUrl },
-                    { title: lang==="en" ? "Each card links to LinkedIn" : "Cada card aponta para o LinkedIn", url: linkedinUrl },
-                    { title: lang==="en" ? "Clean, executive, high-ticket" : "Clean, executivo, high-ticket", url: linkedinUrl }
-                  ]).map((a, i) => (
-                    <div key={i} className="panel rounded-xl p-6 shadow-soft">
-                      <div className="text-sm text-ink/70">LinkedIn</div>
-                      <div className="mt-2 font-semibold tracking-tight">{a.title}</div>
-                      <a href={a.url} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-lg px-4 py-2 btn-ghost text-sm">
-                        {t.articles.cta}
-                      </a>
-                    </div>
-                  ))}
-                </div>
+                  <div className="mt-6 grid md:grid-cols-3 gap-6">
+                    {(articles.length ? articles : [
+                      { title: lang==="en" ? "Add your LinkedIn articles here (cards)" : "Adicione seus artigos do LinkedIn aqui (cards)", url: linkedinUrl },
+                      { title: lang==="en" ? "Each card links to LinkedIn" : "Cada card aponta para o LinkedIn", url: linkedinUrl },
+                      { title: lang==="en" ? "Executive, modern, high-ticket" : "Executivo, moderno, high-ticket", url: linkedinUrl }
+                    ]).map((a, i) => (
+                      <div key={i} className="panelDark rXl p-6 shadow-glow">
+                        <div className="text-sm text-white/60">LinkedIn</div>
+                        <div className="mt-2 font-semibold tracking-tight text-white/90">{a.title}</div>
+                        <a href={a.url} target="_blank" rel="noreferrer" className="mt-4 inline-flex rLg px-4 py-2 btn-ghostOnDark text-sm">
+                          {t.articles.cta}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
 
-                <div className="mt-8">
-                  <a href={linkedinUrl} target="_blank" rel="noreferrer" className="inline-flex rounded-lg px-4 py-2 btn-primary text-sm">
-                    {lang==="en" ? "See all articles on LinkedIn" : "Ver todos os artigos no LinkedIn"}
-                  </a>
+                  <div className="mt-8">
+                    <a href={linkedinUrl} target="_blank" rel="noreferrer" className="inline-flex rLg px-4 py-2 btn-primary text-sm font-medium">
+                      {lang==="en" ? "See all articles on LinkedIn" : "Ver todos os artigos no LinkedIn"}
+                    </a>
+                  </div>
                 </div>
               </div>
             </section>
 
-            {/* PODCASTS */}
-            <section id="podcasts" className="border-t border-line">
+            {/* PODCASTS (light) */}
+            <section id="podcasts" className="divider">
               <div className="max-w-6xl mx-auto px-4 py-14">
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.podcasts.title}</h2>
-                <p className="mt-2 text-ink/70">{t.podcasts.desc}</p>
+                <p className="mt-2 muted">{t.podcasts.desc}</p>
 
                 <div className="mt-6 grid md:grid-cols-2 gap-6">
-                  <div className="panel rounded-xl p-6 shadow-soft">
+                  <div className="panel rXl p-6 shadow-soft">
                     <div className="font-semibold">Spotify</div>
-                    <p className="mt-2 text-sm text-ink/70">
+                    <p className="mt-2 text-sm muted">
                       {lang==="en" ? "Paste your Spotify embed iframe in spotifyEmbed." : "Cole o iframe do Spotify em spotifyEmbed."}
                     </p>
                     <Embed html={spotifyEmbed} />
                   </div>
 
-                  <div className="panel rounded-xl p-6 shadow-soft">
+                  <div className="panel rXl p-6 shadow-soft">
                     <div className="font-semibold">YouTube</div>
-                    <p className="mt-2 text-sm text-ink/70">
+                    <p className="mt-2 text-sm muted">
                       {lang==="en" ? "Paste your YouTube embed iframe in youtubeEmbed." : "Cole o iframe do YouTube em youtubeEmbed."}
                     </p>
                     <Embed html={youtubeEmbed} />
@@ -499,34 +556,34 @@
               </div>
             </section>
 
-            {/* CONTACT */}
-            <section id="contact" className="border-t border-line bg-white">
+            {/* CONTACT (light) */}
+            <section id="contact" className="divider">
               <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-start">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.contact.title}</h2>
-                  <p className="mt-2 text-ink/75">{t.contact.desc}</p>
+                  <p className="mt-2 muted">{t.contact.desc}</p>
 
                   <div className="mt-4 text-sm text-ink/70">
                     LinkedIn: <InlineLink href={linkedinUrl}>{linkedinUrl}</InlineLink>
                   </div>
                 </div>
 
-                <div className="panel rounded-xl p-6 shadow-soft">
+                <div className="panel rXl p-6 shadow-soft">
                   <form className="grid gap-3">
-                    <input className="hairline rounded-md px-4 py-3 bg-white" placeholder={lang==="en" ? "Name" : "Nome"} />
-                    <input className="hairline rounded-md px-4 py-3 bg-white" placeholder="Email" />
-                    <select className="hairline rounded-md px-4 py-3 bg-white">
+                    <input className="hairline rMd px-4 py-3 bg-white" placeholder={lang==="en" ? "Name" : "Nome"} />
+                    <input className="hairline rMd px-4 py-3 bg-white" placeholder="Email" />
+                    <select className="hairline rMd px-4 py-3 bg-white">
                       <option>{lang==="en" ? "I'm a company (services)" : "Sou empresa (serviços)"}</option>
                       <option>{lang==="en" ? "I'm an individual (mentoring)" : "Sou pessoa (mentoria)"}</option>
                       <option>{lang==="en" ? "Event invitation (speaking)" : "Convite para palestra"}</option>
                     </select>
-                    <textarea className="hairline rounded-md px-4 py-3 bg-white" rows="4" placeholder={lang==="en" ? "Message" : "Mensagem"}></textarea>
+                    <textarea className="hairline rMd px-4 py-3 bg-white" rows="4" placeholder={lang==="en" ? "Message" : "Mensagem"}></textarea>
 
                     {/* GitHub Pages não roda backend.
                         Para receber mensagens, conecte esse form a Formspree/Tally/Getform e defina action/method.
                     */}
 
-                    <button type="button" className="rounded-lg px-5 py-3 btn-primary text-sm">
+                    <button type="button" className="rLg px-5 py-3 btn-primary text-sm font-medium">
                       {t.contact.cta}
                     </button>
 
@@ -540,7 +597,7 @@
               </div>
             </section>
 
-            <footer className="border-t border-line">
+            <footer className="divider">
               <div className="max-w-6xl mx-auto px-4 py-10 text-sm text-ink/60 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
                 <div>{t.footer.rights} {new Date().getFullYear()} Aline da Silva Souza. All rights reserved.</div>
                 <div className="flex gap-4 flex-wrap">
