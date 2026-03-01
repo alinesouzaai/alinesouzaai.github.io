@@ -17,7 +17,7 @@
     <!-- Babel (JSX no navegador) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Executive Light/Dark Mix (neon accents) -->
+    <!-- Tailwind theme -->
     <script>
       tailwind.config = {
         theme: {
@@ -25,26 +25,20 @@
             colors: {
               ink: "#0B0F1A",
               paper: "#F7F8FC",
-              panel: "rgba(255,255,255,.78)",
-              panel2: "rgba(255,255,255,.62)",
-              line: "rgba(11,15,26,.12)",
-              sub: "rgba(11,15,26,.70)",
-              dark: "#060915",
-              dark2: "#0B1024",
-              w: "rgba(255,255,255,.92)",
-              wsub: "rgba(255,255,255,.75)",
-              wline: "rgba(255,255,255,.14)",
-              neonA: "#2EF2FF",
-              neonB: "#6A5CFF",
-              neonC: "#22D3A6"
+              line: "rgba(255,255,255,.10)",
+              line2: "rgba(11,15,26,.10)",
+              glass: "rgba(10,14,26,.62)",
+              glass2: "rgba(255,255,255,.80)",
+              neonC: "#35E3FF",
+              neonP: "#6A63FF",
+              neonG: "#24F1B6"
             },
             boxShadow: {
-              soft: "0 18px 60px rgba(11,15,26,.10)",
-              soft2: "0 30px 80px rgba(11,15,26,.14)",
-              glow: "0 0 0 1px rgba(46,242,255,.18), 0 18px 60px rgba(0,0,0,.25)"
+              soft: "0 14px 50px rgba(11,15,26,.12)",
+              glass: "0 22px 70px rgba(0,0,0,.35)"
             },
             borderRadius: {
-              xl: "14px",
+              xl: "16px",
               lg: "12px",
               md: "10px"
             }
@@ -55,139 +49,142 @@
 
     <style>
       :root { color-scheme: light; }
-      html, body { height: 100%; }
+      body { background: #F7F8FC; }
 
-      /* Overall: light executive canvas + dark hero */
-      body{
-        background:
-          radial-gradient(900px 520px at 14% 0%, rgba(106,92,255,.12), transparent 55%),
-          radial-gradient(900px 520px at 92% 10%, rgba(46,242,255,.10), transparent 55%),
-          radial-gradient(900px 520px at 62% 110%, rgba(34,211,166,.09), transparent 55%),
-          #F7F8FC;
-        color: #0B0F1A;
-      }
+      /* Modern “executive” edges (less round), crisp borders */
+      .hairline { border: 1px solid rgba(11,15,26,.12); }
 
-      .hairline{ border: 1px solid rgba(11,15,26,.12); }
-      .muted{ color: rgba(11,15,26,.70); }
-
-      /* Glass panel on light */
-      .panel{
-        background: rgba(255,255,255,.78);
-        border: 1px solid rgba(11,15,26,.12);
-        backdrop-filter: blur(12px);
-      }
-      .panel:hover{ border-color: rgba(46,242,255,.22); }
-
-      /* Dark panels (used in hero) */
-      .panelDark{
-        background: rgba(6,9,21,.62);
-        border: 1px solid rgba(255,255,255,.14);
+      /* Dark glass used in hero/cards */
+      .panel-dark{
+        background: rgba(10,14,26,.62);
+        border: 1px solid rgba(53,227,255,.18);
+        box-shadow: 0 22px 70px rgba(0,0,0,.35);
         backdrop-filter: blur(14px);
       }
-      .panelDark:hover{ border-color: rgba(46,242,255,.24); }
+
+      /* Light elegant cards */
+      .panel-light{
+        background: rgba(255,255,255,.86);
+        border: 1px solid rgba(11,15,26,.10);
+        box-shadow: 0 14px 50px rgba(11,15,26,.10);
+        backdrop-filter: blur(10px);
+      }
 
       .btn-primary{
-        background: linear-gradient(90deg, rgba(46,242,255,.95), rgba(106,92,255,.95));
-        color: #060915;
-        box-shadow: 0 12px 34px rgba(46,242,255,.10);
+        color: #0B0F1A;
+        background: linear-gradient(90deg, rgba(53,227,255,.95), rgba(106,99,255,.95));
       }
-      .btn-primary:hover{ opacity:.96; }
+      .btn-primary:hover{ opacity:.92; }
 
       .btn-ghost{
         background: transparent;
-        border: 1px solid rgba(11,15,26,.18);
-        color:#0B0F1A;
+        border: 1px solid rgba(255,255,255,.22);
+        color:#fff;
       }
-      .btn-ghost:hover{ background: rgba(11,15,26,.04); border-color: rgba(46,242,255,.24); }
-
-      .btn-ghostOnDark{
-        background: transparent;
-        border: 1px solid rgba(255,255,255,.20);
-        color: rgba(255,255,255,.90);
-      }
-      .btn-ghostOnDark:hover{ background: rgba(255,255,255,.08); border-color: rgba(46,242,255,.26); }
+      .btn-ghost:hover{ background: rgba(255,255,255,.08); }
 
       .link:hover{ opacity:.82; }
 
-      .kicker{
-        background: linear-gradient(90deg, rgba(46,242,255,.95), rgba(34,211,166,.95));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+      /* Top bar accent line in logo palette */
+      .top-accent{
+        height: 3px;
+        background: linear-gradient(90deg, rgba(53,227,255,1), rgba(106,99,255,1), rgba(36,241,182,1));
       }
 
-      .titleGlow{ text-shadow: 0 0 22px rgba(46,242,255,.14); }
-
-      /* Section divider */
-      .divider{ border-top: 1px solid rgba(11,15,26,.10); }
-
-      /* Subtle “executive” corners (less round) */
-      .rXl{ border-radius: 14px; }
-      .rLg{ border-radius: 12px; }
-      .rMd{ border-radius: 10px; }
+      /* Light sections have subtle neon whisper */
+      .soft-wash{
+        background:
+          radial-gradient(900px 340px at 20% 0%, rgba(53,227,255,.10), transparent 55%),
+          radial-gradient(900px 340px at 80% 30%, rgba(106,99,255,.10), transparent 55%),
+          linear-gradient(180deg, #F7F8FC, #FFFFFF);
+      }
     </style>
   </head>
 
-  <body>
+  <body class="text-ink">
     <div id="root"></div>
 
     <script type="text/babel">
-      function Img(props) {
+      function InlineLink({ href, children, light }) {
         return (
-          <img
-            {...props}
-            onError={(e) => { e.currentTarget.style.display = "none"; }}
-          />
+          <a
+            className={"underline underline-offset-4 decoration-black/20 " + (light ? "text-ink hover:opacity-80" : "text-white hover:opacity-80")}
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {children}
+          </a>
         );
       }
 
-      function Card({ title, desc, bullets, cta, ctaHref="#contact" }) {
+      function CardLight({ title, desc, bullets, cta, href="#contact" }) {
         return (
-          <div className="panel rXl p-6 shadow-soft flex flex-col justify-between">
+          <div className="panel-light rounded-xl p-6 flex flex-col justify-between">
             <div>
               <h3 className="font-semibold text-lg tracking-tight">{title}</h3>
-              <p className="mt-2 text-sm muted">{desc}</p>
+              <p className="mt-2 text-sm text-ink/70">{desc}</p>
               {bullets?.length ? (
                 <ul className="mt-4 space-y-2 text-sm text-ink/80">
                   {bullets.map((b, i) => (
                     <li key={i} className="flex gap-2">
-                      <span className="text-ink/40">•</span>
+                      <span className="text-ink/35">•</span>
                       <span>{b}</span>
                     </li>
                   ))}
                 </ul>
               ) : null}
             </div>
-
-            <a href={ctaHref} className="mt-6 inline-flex w-fit rLg px-4 py-2 btn-primary text-sm font-medium">
+            <a href={href} className="mt-6 inline-flex w-fit rounded-lg px-4 py-2 btn-primary text-sm font-medium">
               {cta}
             </a>
           </div>
         );
       }
 
-      function InlineLink({ href, children }) {
+      function ArticleCard({ title, url, cta }) {
         return (
-          <a className="link underline decoration-black/20 underline-offset-4" href={href} target="_blank" rel="noreferrer">
-            {children}
-          </a>
+          <div className="panel-light rounded-xl p-6">
+            <div className="text-xs tracking-widest uppercase text-ink/50">LinkedIn</div>
+            <div className="mt-2 font-semibold tracking-tight">{title}</div>
+            <a href={url} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-lg px-4 py-2 hairline bg-white text-sm hover:bg-black/5">
+              {cta}
+            </a>
+          </div>
         );
-      }
-
-      function Embed({ html }) {
-        if (!html) return null;
-        return <div className="mt-4" dangerouslySetInnerHTML={{ __html: html }} />;
       }
 
       function Landing() {
         const [lang, setLang] = React.useState("en");
+
+        const linkedinUrl = "https://www.linkedin.com/in/alinedatascientist/";
+        const emailTo = "alinedatascientst@gmail.com";
+
+        const articles = [
+          {
+            title: "AI Governance That Ships: ML Canvas as the Bridge Between Risk and Real Value",
+            url: "https://www.linkedin.com/posts/alinedatascientist_ai-governance-that-ships-ml-canvas-as-the-activity-7425576489204477952-SUF8?utm_source=share&utm_medium=member_desktop&rcm=ACoAABGQRZABsnXqR83JAbHprUN8aWHrb_fzSpw"
+          },
+          {
+            title: "AI literacy",
+            url: "https://www.linkedin.com/posts/alinedatascientist_ai-literacy-activity-7424081713397477376-zT4A?utm_source=share&utm_medium=member_desktop&rcm=ACoAABGQRZABsnXqR83JAbHprUN8aWHrb_fzSpw"
+          },
+          {
+            title: "Exploring Conditional Missing Patterns for Automated Bacteria Identification using MALDI-TOF MS Data",
+            url: "https://www.linkedin.com/posts/alinedatascientist_exploring-conditional-missing-patterns-activity-7158135806455382016-AXqS?utm_source=share&utm_medium=member_desktop&rcm=ACoAABGQRZABsnXqR83JAbHprUN8aWHrb_fzSpw"
+          }
+        ];
+
+        // Se você ainda não tem imagem de testimonial, deixe array vazio.
+        // Quando tiver: coloque em assets/img/testimonial-01.png e adicione aqui.
+        const testimonials = []; // e.g. ["./assets/img/testimonial-01.png"]
 
         const dict = {
           en: {
             brand: "Aline — Human-Centered AI",
             nav: { services:"Services", mentoring:"Mentoring", speaking:"Speaking", articles:"Articles", podcasts:"Podcasts", contact:"Contact" },
             hero: {
-              pre: "Strategy • Governance • Value",
+              pre: "STRATEGY • GOVERNANCE • VALUE",
               title: "Human-centered AI for leaders who want real impact.",
               subtitle: "I help organizations turn vision into outcomes — with people at the center, well-governed data, and decisions that last.",
               cta1: "Book a call",
@@ -199,7 +196,8 @@
                 "People before models: technology is the means, not the end.",
                 "Strategic clarity: a well-framed problem is half solved.",
                 "Elegant governance: simple enough to scale."
-              ]
+              ],
+              foot: "Oslo-based • Global delivery"
             },
             services: {
               title: "Core services",
@@ -214,36 +212,24 @@
               title: "Mentoring (1:1) — Women in Tech focus",
               desc: "A strategic, straight-to-the-point session to define your next 90 days. Primary focus: women in technology. Men are also welcome.",
               bullets: ["Career direction","Positioning & storytelling","Interview strategy","Leadership presence"],
-              cta: "Apply for mentoring"
+              cta: "Apply for mentoring",
+              note: "Mentoring is a structured conversation: clarity, positioning, and a 90-day execution plan."
             },
             speaking: {
               title: "Keynote Speaker & Events",
               desc: "Talks in English or Portuguese. Topics: AI strategy, governance, human-centered transformation, and career building.",
-              cta: "Invite me to speak",
-              proof: "Media kit + testimonials available upon request."
+              cta: "Invite me to speak"
             },
-            articles: {
-              title: "Articles",
-              desc: "Published on LinkedIn. Featured reads:",
-              cta: "Read on LinkedIn"
-            },
-            podcasts: {
-              title: "Podcasts",
-              desc: "Listen on Spotify and watch on YouTube."
-            },
-            contact: {
-              title: "Contact",
-              desc: "For companies: request services. For individuals: mentoring application.",
-              cta: "Send message"
-            },
-            footer: { rights: "©" },
+            articles: { title:"Articles", desc:"Published on LinkedIn. Featured reads:", cta:"Read on LinkedIn", all:"See all on LinkedIn" },
+            podcasts: { title:"Podcasts", desc:"Listen on Spotify and watch on YouTube.", hint:"Add your Spotify/YouTube embeds later." },
+            contact: { title:"Contact", desc:"Companies: services. Individuals: mentoring. Events: speaking.", cta:"Send message", topic:"Topic", name:"Name", msg:"Message" },
             labels: { language:"Language" }
           },
           pt: {
             brand: "Aline — IA Humanizada",
             nav: { services:"Serviços", mentoring:"Mentoria", speaking:"Palestras", articles:"Artigos", podcasts:"Podcasts", contact:"Contato" },
             hero: {
-              pre: "Estratégia • Governança • Valor",
+              pre: "ESTRATÉGIA • GOVERNANÇA • VALOR",
               title: "IA humanizada para líderes que buscam impacto real.",
               subtitle: "Eu ajudo organizações a transformar visão em resultados — com gente no centro, dados bem cuidados e decisões que resistem ao tempo.",
               cta1: "Agendar conversa",
@@ -255,7 +241,8 @@
                 "Pessoas antes de modelos: tecnologia é meio, não fim.",
                 "Clareza estratégica: problema bem definido é metade resolvido.",
                 "Governança elegante: simples o suficiente para escalar."
-              ]
+              ],
+              foot: "Base em Oslo • Entrega global"
             },
             services: {
               title: "Serviços principais",
@@ -270,68 +257,52 @@
               title: "Mentoria (1:1) — Foco em mulheres na tecnologia",
               desc: "Sessão estratégica e direta para definir seus próximos 90 dias. O foco são mulheres em tecnologia. Homens também são bem-vindos.",
               bullets: ["Direção de carreira","Posicionamento & narrativa","Entrevistas","Presença de liderança"],
-              cta: "Aplicar para mentoria"
+              cta: "Aplicar para mentoria",
+              note: "A mentoria é uma conversa estruturada: clareza, posicionamento e um plano de execução de 90 dias."
             },
             speaking: {
               title: "Keynote Speaker & Eventos",
               desc: "Palestras em inglês ou português. Temas: estratégia em IA, governança, transformação humanizada e carreira.",
-              cta: "Me convide para palestrar",
-              proof: "Media kit + depoimentos sob solicitação."
+              cta: "Me convide para palestrar"
             },
-            articles: {
-              title: "Artigos",
-              desc: "Publicados no LinkedIn. Leituras em destaque:",
-              cta: "Ler no LinkedIn"
-            },
-            podcasts: {
-              title: "Podcasts",
-              desc: "Ouça no Spotify e assista no YouTube."
-            },
-            contact: {
-              title: "Contato",
-              desc: "Empresas: solicitação de serviços. Pessoas: aplicação para mentoria.",
-              cta: "Enviar mensagem"
-            },
-            footer: { rights: "©" },
+            articles: { title:"Artigos", desc:"Publicados no LinkedIn. Leituras em destaque:", cta:"Ler no LinkedIn", all:"Ver tudo no LinkedIn" },
+            podcasts: { title:"Podcasts", desc:"Ouça no Spotify e assista no YouTube.", hint:"Adicione os embeds de Spotify/YouTube depois." },
+            contact: { title:"Contato", desc:"Empresas: serviços. Pessoas: mentoria. Eventos: palestras.", cta:"Enviar mensagem", topic:"Assunto", name:"Nome", msg:"Mensagem" },
             labels: { language:"Idioma" }
           }
         };
 
         const t = dict[lang];
 
-        React.useEffect(() => {
-          document.documentElement.lang = lang === "pt" ? "pt" : "en";
-        }, [lang]);
+        function handleMailTo(e){
+          e.preventDefault();
+          const form = e.target;
+          const name = form.name.value?.trim() || "";
+          const email = form.email.value?.trim() || "";
+          const topic = form.topic.value || "";
+          const msg = form.message.value?.trim() || "";
 
-        const linkedinUrl = "https://www.linkedin.com/in/alinedatascientist/";
+          const subject = encodeURIComponent(`[Site] ${topic} — ${name || "Visitor"}`);
+          const body = encodeURIComponent(
+            `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\nMessage:\n${msg}\n\nLinkedIn: ${linkedinUrl}\n`
+          );
 
-        // Add your LinkedIn article links here
-        const articles = [
-          // { title: "AI Governance That Ships: ML Canvas as the Bridge Between Risk and Real Value", url: "PASTE_LINKEDIN_ARTICLE_URL" },
-        ];
-
-        // Paste the full iframe as a string (Spotify/YouTube)
-        const spotifyEmbed = null;
-        const youtubeEmbed = null;
-
-        const heroImg = "./assets/img/hero-01.jpg";
-        const mentoringImg = "./assets/img/mentoring-01.jpg";
-        const speaker1 = "./assets/img/speaker-01.jpg";
-        const speaker2 = "./assets/img/speaker-02.jpg";
+          window.location.href = `mailto:${emailTo}?subject=${subject}&body=${body}`;
+        }
 
         return (
           <div className="min-h-screen">
-            {/* Header (light glass) */}
-            <header className="sticky top-0 z-40 divider bg-[rgba(247,248,252,.72)] backdrop-blur">
+            <div className="top-accent"></div>
+
+            {/* Header */}
+            <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-black/5">
               <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
                 <a href="#" className="flex items-center gap-3">
-                  <img src="./assets/brand/logo-light.png" alt="Aline" className="h-8 w-auto" />
-                  <span className="hidden sm:block font-semibold tracking-tight text-ink">
-                    {t.brand}
-                  </span>
+                  <img src="./assets/brand/logo-light.png" alt="Aline Data Scientist" className="h-8 w-auto" />
+                  <span className="hidden sm:block font-semibold tracking-tight">{t.brand}</span>
                 </a>
 
-                <nav className="hidden md:flex items-center gap-6 text-sm text-ink/70">
+                <nav className="hidden md:flex items-center gap-6 text-sm text-ink/75">
                   <a className="link" href="#services">{t.nav.services}</a>
                   <a className="link" href="#mentoring">{t.nav.mentoring}</a>
                   <a className="link" href="#speaking">{t.nav.speaking}</a>
@@ -343,7 +314,7 @@
                 <div className="flex items-center gap-2">
                   <select
                     aria-label={t.labels.language}
-                    className="hairline rMd px-2 py-2 text-sm bg-white"
+                    className="hairline rounded-md px-3 py-2 text-sm bg-white"
                     value={lang}
                     onChange={(e) => setLang(e.target.value)}
                   >
@@ -351,255 +322,241 @@
                     <option value="pt">PT</option>
                   </select>
 
-                  <a href="#contact" className="hidden sm:inline-flex rLg px-4 py-2 btn-primary text-sm font-medium">
+                  <a href="#contact" className="hidden sm:inline-flex rounded-lg px-4 py-2 btn-primary text-sm font-medium">
                     {t.hero.cta1}
                   </a>
                 </div>
               </div>
             </header>
 
-            {/* HERO (dark couture) */}
+            {/* HERO (dark neon, aligned with logo) */}
             <section className="relative overflow-hidden">
               <div className="absolute inset-0">
-                <div
-                  className="h-full w-full"
-                  style={{
-                    background:
-                      "radial-gradient(1100px 540px at 18% -10%, rgba(106,92,255,.28), transparent 55%)," +
-                      "radial-gradient(900px 520px at 90% 12%, rgba(46,242,255,.18), transparent 55%)," +
-                      "radial-gradient(900px 520px at 55% 110%, rgba(34,211,166,.14), transparent 55%)," +
-                      "linear-gradient(180deg, rgba(6,9,21,.96), rgba(11,16,36,.92))"
-                  }}
-                />
-                <Img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover opacity-22 mix-blend-screen" />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#060915]/82 via-[#0B1024]/62 to-[#060915]/88"></div>
+                <img src="./assets/img/hero-01.jpg" alt="" className="h-full w-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/45 to-black/80"></div>
+                <div className="absolute -top-24 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-neonC/20 blur-3xl"></div>
+                <div className="absolute -bottom-28 left-10 h-[420px] w-[420px] rounded-full bg-neonP/18 blur-3xl"></div>
               </div>
 
-              <div className="relative max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
-                <div className="text-white">
-                  <p className="uppercase tracking-widest text-xs text-white/70 kicker">{t.hero.pre}</p>
-                  <h1 className="mt-2 text-4xl md:text-5xl font-semibold leading-tight titleGlow">
-                    {t.hero.title}
-                  </h1>
+              <div className="relative max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center text-white">
+                <div>
+                  <p className="uppercase tracking-widest text-xs text-white/70">{t.hero.pre}</p>
+                  <h1 className="mt-3 text-4xl md:text-5xl font-semibold leading-tight">{t.hero.title}</h1>
                   <p className="mt-5 text-lg text-white/80 max-w-xl">{t.hero.subtitle}</p>
 
                   <div className="mt-7 flex gap-3 flex-wrap">
-                    <a href="#contact" className="rLg px-5 py-3 btn-primary">
+                    <a href="#contact" className="rounded-lg px-5 py-3 bg-white text-black hover:opacity-90 font-medium">
                       {t.hero.cta1}
                     </a>
-                    <a href={linkedinUrl} target="_blank" rel="noreferrer" className="rLg px-5 py-3 btn-ghostOnDark">
+                    <a href={linkedinUrl} target="_blank" rel="noreferrer" className="rounded-lg px-5 py-3 btn-ghost">
                       {t.hero.cta2}
                     </a>
                   </div>
 
                   <div className="mt-8 grid gap-2 text-sm text-white/75">
-                    {t.philosophy.items.map((it, i) => (
+                    {t.philosophy.items.map((x, i) => (
                       <div key={i} className="flex gap-2">
-                        <span className="text-white/40">•</span><span>{it}</span>
+                        <span className="text-white/50">•</span><span>{x}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="panelDark rXl p-6 shadow-glow">
+                <div className="panel-dark rounded-xl p-6">
                   <div className="flex items-center justify-between">
-                    <img src="./assets/brand/logo-dark.png" alt="Aline" className="h-12 w-auto opacity-95" />
-                    <div className="flex items-center gap-2">
-                      <div className="h-2 w-2 rounded-full bg-[rgba(46,242,255,.95)]"></div>
-                      <div className="h-2 w-2 rounded-full bg-[rgba(106,92,255,.95)]"></div>
-                      <div className="h-2 w-2 rounded-full bg-[rgba(34,211,166,.95)]"></div>
+                    <div className="flex items-center gap-3">
+                      <img src="./assets/brand/logo-dark.png" alt="Aline Data Scientist" className="h-12 w-auto" />
+                      <div className="font-semibold">{t.philosophy.title}</div>
+                    </div>
+                    <div className="flex gap-2">
+                      <span className="h-2 w-2 rounded-full bg-neonC/90"></span>
+                      <span className="h-2 w-2 rounded-full bg-neonP/90"></span>
+                      <span className="h-2 w-2 rounded-full bg-neonG/90"></span>
                     </div>
                   </div>
 
-                  <h3 className="mt-4 font-semibold text-white/90">{t.philosophy.title}</h3>
-                  <ul className="mt-3 space-y-2 text-white/78 text-sm">
+                  <ul className="mt-4 space-y-2 text-white/80 text-sm">
                     {t.philosophy.items.map((it, i) => (
                       <li key={i} className="flex gap-2">
-                        <span className="text-white/35">•</span>
+                        <span className="text-white/50">•</span>
                         <span>{it}</span>
                       </li>
                     ))}
                   </ul>
 
-                  <div className="mt-6 text-xs text-white/55">
-                    {lang === "en" ? "Oslo-based • Global delivery" : "Base em Oslo • Atendimento global"}
-                  </div>
+                  <div className="mt-6 text-xs uppercase tracking-widest text-white/55">{t.philosophy.foot}</div>
                 </div>
               </div>
             </section>
 
             {/* SERVICES (light executive) */}
-            <section id="services" className="divider">
+            <section id="services" className="soft-wash border-t border-black/5">
               <div className="max-w-6xl mx-auto px-4 py-14">
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.services.title}</h2>
                 <div className="grid md:grid-cols-3 gap-6 mt-8">
                   {t.services.cards.map((c, idx) => (
-                    <Card key={idx} title={c.title} desc={c.desc} bullets={c.bullets} cta={t.services.cta} />
+                    <CardLight key={idx} title={c.title} desc={c.desc} bullets={c.bullets} cta={t.services.cta} />
                   ))}
                 </div>
               </div>
             </section>
 
-            {/* MENTORING (dark band, then light content) */}
-            <section id="mentoring" className="divider">
-              <div className="bg-gradient-to-br from-[#060915] via-[#0B1024] to-[#060915]">
-                <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
-                  <div className="text-white">
-                    <h2 className="text-2xl md:text-3xl font-semibold tracking-tight titleGlow">{t.mentoring.title}</h2>
-                    <p className="mt-3 text-white/78">{t.mentoring.desc}</p>
-                    <ul className="mt-5 space-y-2 text-sm text-white/78">
-                      {t.mentoring.bullets.map((b, i) => (
-                        <li key={i} className="flex gap-2">
-                          <span className="text-white/35">•</span><span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <a href="#contact" className="mt-6 inline-flex rLg px-5 py-3 btn-primary text-sm font-medium">
-                      {t.mentoring.cta}
-                    </a>
+            {/* MENTORING */}
+            <section id="mentoring" className="border-t border-black/5 bg-white">
+              <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.mentoring.title}</h2>
+                  <p className="mt-3 text-ink/75">{t.mentoring.desc}</p>
+                  <ul className="mt-5 space-y-2 text-sm text-ink/80">
+                    {t.mentoring.bullets.map((b, i) => (
+                      <li key={i} className="flex gap-2">
+                        <span className="text-ink/35">•</span><span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <a href="#contact" className="mt-6 inline-flex rounded-lg px-5 py-3 btn-primary text-sm font-medium">
+                    {t.mentoring.cta}
+                  </a>
+                </div>
+
+                <div className="panel-light rounded-xl p-6">
+                  {/* depoimento: NÃO cortar (object-contain) */}
+                  <div className="hairline rounded-lg bg-white p-2">
+                    <img
+                      src="./assets/img/mentoring-01.jpg"
+                      alt="Mentoring testimonial"
+                      className="w-full h-64 object-contain rounded-md"
+                      onError={(e)=>{ e.currentTarget.style.display="none"; }}
+                    />
+                    <div className="text-xs text-ink/45 mt-2">
+                      {lang==="en" ? "Add: assets/img/mentoring-01.jpg" : "Adicione: assets/img/mentoring-01.jpg"}
+                    </div>
                   </div>
 
-                  <div className="panelDark rXl p-6 shadow-glow">
-                    <Img src={mentoringImg} alt="Mentoring" className="w-full h-56 object-cover rLg hairline" />
-                    <p className="mt-4 text-sm text-white/70">
-                      {lang === "en"
-                        ? "Mentoring is a structured conversation: clarity, positioning, and a 90-day execution plan."
-                        : "A mentoria é uma conversa estruturada: clareza, posicionamento e um plano de execução de 90 dias."}
-                    </p>
-                  </div>
+                  {/* Só mostra texto se NÃO houver imagens de testimonial e a imagem principal falhar/for removida */}
+                  <p className="mt-4 text-sm text-ink/70">{t.mentoring.note}</p>
+
+                  {/* Se você adicionar testimonials, aparece aqui automaticamente */}
+                  {testimonials.length ? (
+                    <div className="mt-4 grid grid-cols-2 gap-3">
+                      {testimonials.map((src, i)=>(
+                        <img key={i} src={src} alt={"Testimonial "+(i+1)} className="w-full h-40 object-contain hairline rounded-lg bg-white p-2" />
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </section>
 
-            {/* SPEAKING (light) */}
-            <section id="speaking" className="divider">
+            {/* SPEAKING */}
+            <section id="speaking" className="soft-wash border-t border-black/5">
               <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.speaking.title}</h2>
-                  <p className="mt-3 muted">{t.speaking.desc}</p>
-                  <p className="mt-2 text-sm text-ink/55">{t.speaking.proof}</p>
-
-                  <a href="#contact" className="mt-6 inline-flex rLg px-5 py-3 btn-primary text-sm font-medium">
+                  <p className="mt-3 text-ink/75">{t.speaking.desc}</p>
+                  <a href="#contact" className="mt-6 inline-flex rounded-lg px-5 py-3 btn-primary text-sm font-medium">
                     {t.speaking.cta}
                   </a>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Img src={speaker1} alt="Speaking 1" className="w-full h-44 object-cover rLg hairline" />
-                  <Img src={speaker2} alt="Speaking 2" className="w-full h-44 object-cover rLg hairline" />
-                  <div className="col-span-2 panel rXl p-5 shadow-soft">
-                    <div className="text-sm muted">
-                      {lang === "en"
-                        ? "Add testimonials as images later (e.g., /assets/img/testimonial-01.png) and link them here."
-                        : "Adicione depoimentos como imagens depois (ex.: /assets/img/testimonial-01.png) e linke aqui."}
+                  <img src="./assets/img/speaker-01.jpg" alt="Speaking 1" className="w-full h-44 object-cover rounded-lg hairline"
+                       onError={(e)=>{ e.currentTarget.style.display="none"; }} />
+                  <img src="./assets/img/speaker-02.jpg" alt="Speaking 2" className="w-full h-44 object-cover rounded-lg hairline"
+                       onError={(e)=>{ e.currentTarget.style.display="none"; }} />
+                  {/* remove texto automático: só aparece se você colocar imagens */}
+                  {false ? (
+                    <div className="col-span-2 panel-light rounded-xl p-5">
+                      <div className="text-sm text-ink/70">placeholder</div>
                     </div>
-                  </div>
+                  ) : null}
                 </div>
               </div>
             </section>
 
-            {/* ARTICLES (dark strip to feel premium) */}
-            <section id="articles" className="divider">
-              <div className="bg-gradient-to-br from-[#060915] via-[#0B1024] to-[#060915]">
-                <div className="max-w-6xl mx-auto px-4 py-14">
-                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-white titleGlow">{t.articles.title}</h2>
-                  <p className="mt-2 text-white/70">{t.articles.desc}</p>
+            {/* ARTICLES */}
+            <section id="articles" className="border-t border-black/5 bg-white">
+              <div className="max-w-6xl mx-auto px-4 py-14">
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.articles.title}</h2>
+                <p className="mt-2 text-ink/70">{t.articles.desc}</p>
 
-                  <div className="mt-6 grid md:grid-cols-3 gap-6">
-                    {(articles.length ? articles : [
-                      { title: lang==="en" ? "Add your LinkedIn articles here (cards)" : "Adicione seus artigos do LinkedIn aqui (cards)", url: linkedinUrl },
-                      { title: lang==="en" ? "Each card links to LinkedIn" : "Cada card aponta para o LinkedIn", url: linkedinUrl },
-                      { title: lang==="en" ? "Executive, modern, high-ticket" : "Executivo, moderno, high-ticket", url: linkedinUrl }
-                    ]).map((a, i) => (
-                      <div key={i} className="panelDark rXl p-6 shadow-glow">
-                        <div className="text-sm text-white/60">LinkedIn</div>
-                        <div className="mt-2 font-semibold tracking-tight text-white/90">{a.title}</div>
-                        <a href={a.url} target="_blank" rel="noreferrer" className="mt-4 inline-flex rLg px-4 py-2 btn-ghostOnDark text-sm">
-                          {t.articles.cta}
-                        </a>
-                      </div>
-                    ))}
-                  </div>
+                <div className="mt-6 grid md:grid-cols-3 gap-6">
+                  {articles.map((a, i) => (
+                    <ArticleCard key={i} title={a.title} url={a.url} cta={t.articles.cta} />
+                  ))}
+                </div>
 
-                  <div className="mt-8">
-                    <a href={linkedinUrl} target="_blank" rel="noreferrer" className="inline-flex rLg px-4 py-2 btn-primary text-sm font-medium">
-                      {lang==="en" ? "See all articles on LinkedIn" : "Ver todos os artigos no LinkedIn"}
-                    </a>
-                  </div>
+                <div className="mt-8">
+                  <a href={linkedinUrl} target="_blank" rel="noreferrer" className="inline-flex rounded-lg px-4 py-2 btn-primary text-sm font-medium">
+                    {t.articles.all}
+                  </a>
                 </div>
               </div>
             </section>
 
-            {/* PODCASTS (light) */}
-            <section id="podcasts" className="divider">
+            {/* PODCASTS (placeholders — you’ll paste embeds later) */}
+            <section id="podcasts" className="soft-wash border-t border-black/5">
               <div className="max-w-6xl mx-auto px-4 py-14">
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.podcasts.title}</h2>
-                <p className="mt-2 muted">{t.podcasts.desc}</p>
+                <p className="mt-2 text-ink/70">{t.podcasts.desc}</p>
 
                 <div className="mt-6 grid md:grid-cols-2 gap-6">
-                  <div className="panel rXl p-6 shadow-soft">
+                  <div className="panel-light rounded-xl p-6">
                     <div className="font-semibold">Spotify</div>
-                    <p className="mt-2 text-sm muted">
-                      {lang==="en" ? "Paste your Spotify embed iframe in spotifyEmbed." : "Cole o iframe do Spotify em spotifyEmbed."}
-                    </p>
-                    <Embed html={spotifyEmbed} />
+                    <p className="mt-2 text-sm text-ink/70">{t.podcasts.hint}</p>
                   </div>
-
-                  <div className="panel rXl p-6 shadow-soft">
+                  <div className="panel-light rounded-xl p-6">
                     <div className="font-semibold">YouTube</div>
-                    <p className="mt-2 text-sm muted">
-                      {lang==="en" ? "Paste your YouTube embed iframe in youtubeEmbed." : "Cole o iframe do YouTube em youtubeEmbed."}
-                    </p>
-                    <Embed html={youtubeEmbed} />
+                    <p className="mt-2 text-sm text-ink/70">{t.podcasts.hint}</p>
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* CONTACT (light) */}
-            <section id="contact" className="divider">
+            {/* CONTACT (mailto) */}
+            <section id="contact" className="border-t border-black/5 bg-white">
               <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-start">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.contact.title}</h2>
-                  <p className="mt-2 muted">{t.contact.desc}</p>
+                  <p className="mt-2 text-ink/75">{t.contact.desc}</p>
 
                   <div className="mt-4 text-sm text-ink/70">
-                    LinkedIn: <InlineLink href={linkedinUrl}>{linkedinUrl}</InlineLink>
+                    LinkedIn: <InlineLink light href={linkedinUrl}>{linkedinUrl}</InlineLink>
+                  </div>
+
+                  <div className="mt-3 text-sm text-ink/70">
+                    Email: <span className="font-medium">{emailTo}</span>
                   </div>
                 </div>
 
-                <div className="panel rXl p-6 shadow-soft">
-                  <form className="grid gap-3">
-                    <input className="hairline rMd px-4 py-3 bg-white" placeholder={lang==="en" ? "Name" : "Nome"} />
-                    <input className="hairline rMd px-4 py-3 bg-white" placeholder="Email" />
-                    <select className="hairline rMd px-4 py-3 bg-white">
-                      <option>{lang==="en" ? "I'm a company (services)" : "Sou empresa (serviços)"}</option>
-                      <option>{lang==="en" ? "I'm an individual (mentoring)" : "Sou pessoa (mentoria)"}</option>
-                      <option>{lang==="en" ? "Event invitation (speaking)" : "Convite para palestra"}</option>
+                <div className="panel-light rounded-xl p-6">
+                  <form className="grid gap-3" onSubmit={handleMailTo}>
+                    <input name="name" className="hairline rounded-md px-4 py-3 bg-white" placeholder={t.contact.name} />
+                    <input name="email" className="hairline rounded-md px-4 py-3 bg-white" placeholder="Email" />
+                    <select name="topic" className="hairline rounded-md px-4 py-3 bg-white">
+                      <option value={lang==="en" ? "Company (services)" : "Empresa (serviços)"}>{lang==="en" ? "I'm a company (services)" : "Sou empresa (serviços)"}</option>
+                      <option value={lang==="en" ? "Individual (mentoring)" : "Pessoa (mentoria)"}>{lang==="en" ? "I'm an individual (mentoring)" : "Sou pessoa (mentoria)"}</option>
+                      <option value={lang==="en" ? "Event (speaking)" : "Evento (palestra)"}>{lang==="en" ? "Event invitation (speaking)" : "Convite para palestra"}</option>
                     </select>
-                    <textarea className="hairline rMd px-4 py-3 bg-white" rows="4" placeholder={lang==="en" ? "Message" : "Mensagem"}></textarea>
+                    <textarea name="message" className="hairline rounded-md px-4 py-3 bg-white" rows="4" placeholder={t.contact.msg}></textarea>
 
-                    {/* GitHub Pages não roda backend.
-                        Para receber mensagens, conecte esse form a Formspree/Tally/Getform e defina action/method.
-                    */}
-
-                    <button type="button" className="rLg px-5 py-3 btn-primary text-sm font-medium">
+                    <button type="submit" className="rounded-lg px-5 py-3 btn-primary text-sm font-medium">
                       {t.contact.cta}
                     </button>
 
-                    <p className="text-xs text-ink/50">
+                    <p className="text-xs text-ink/55">
                       {lang==="en"
-                        ? "To collect submissions, connect this form to Formspree/Tally/Getform (no backend needed)."
-                        : "Para receber envios, conecte este form ao Formspree/Tally/Getform (sem backend)."}
+                        ? "GitHub Pages has no backend. This button opens your email client to send an email."
+                        : "GitHub Pages não tem backend. Este botão abre seu app de e-mail para enviar a mensagem."}
                     </p>
                   </form>
                 </div>
               </div>
             </section>
 
-            <footer className="divider">
+            <footer className="border-t border-black/5">
               <div className="max-w-6xl mx-auto px-4 py-10 text-sm text-ink/60 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
-                <div>{t.footer.rights} {new Date().getFullYear()} Aline da Silva Souza. All rights reserved.</div>
+                <div>© {new Date().getFullYear()} Aline da Silva Souza. All rights reserved.</div>
                 <div className="flex gap-4 flex-wrap">
                   <a className="link" href={linkedinUrl} target="_blank" rel="noreferrer">LinkedIn</a>
                 </div>
