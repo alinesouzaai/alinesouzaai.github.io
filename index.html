@@ -53,11 +53,6 @@
         backdrop-filter: blur(10px);
       }
 
-      .chip{
-        border: 1px solid rgba(11,15,26,.12);
-        background: rgba(255,255,255,.75);
-      }
-
       .btn-primary{ background:#0B0F1A; color:#fff; }
       .btn-primary:hover{ opacity:.92; }
 
@@ -69,6 +64,11 @@
       .btn-ghost:hover{ background: rgba(11,15,26,.04); }
 
       .link:hover{ opacity:.78; }
+
+      /* substitui sua "hairline" */
+      .hairline{
+        border: 1px solid rgba(11,15,26,.14);
+      }
     </style>
   </head>
 
@@ -106,6 +106,17 @@
           <a className="link underline decoration-black/20 underline-offset-4" href={href} target="_blank" rel="noreferrer">
             {children}
           </a>
+        );
+      }
+
+      // render seguro de iframe (Spotify/YouTube)
+      function Embed({ html }) {
+        if (!html) return null;
+        return (
+          <div
+            className="mt-4"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
         );
       }
 
@@ -159,7 +170,7 @@
             },
             podcasts: {
               title: "Podcasts",
-              desc: "Listen on Spotify and watch on YouTube.",
+              desc: "Listen on Spotify and watch on YouTube."
             },
             contact: {
               title: "Contact",
@@ -215,7 +226,7 @@
             },
             podcasts: {
               title: "Podcasts",
-              desc: "Ouça no Spotify e assista no YouTube.",
+              desc: "Ouça no Spotify e assista no YouTube."
             },
             contact: {
               title: "Contato",
@@ -229,19 +240,37 @@
 
         const t = dict[lang];
 
+        // atualiza <html lang="">
+        React.useEffect(() => {
+          document.documentElement.lang = lang === "pt" ? "pt" : "en";
+        }, [lang]);
+
         // LINKS EXTERNOS
         const linkedinUrl = "https://www.linkedin.com/in/alinedatascientist/";
 
-        // Coloque aqui os links dos seus artigos (LinkedIn) quando quiser
+        // Artigos (adicione aqui os seus links)
         const articles = [
-          // { title: "AI Governance That Ships: ML Canvas as the Bridge Between Risk and Real Value", url: "COLE_AQUI" },
-          // { title: "Second article title", url: "COLE_AQUI" },
-          // { title: "Third article title", url: "COLE_AQUI" },
+          // { title: "AI Governance That Ships: ML Canvas as the Bridge Between Risk and Real Value", url: "COLE_O_LINK_DO_POST" },
         ];
 
-        // Embeds: cole iframes do Spotify / YouTube depois (já deixei placeholders)
-        const spotifyEmbed = null; // cole string com iframe se quiser
-        const youtubeEmbed = null; // cole string com iframe se quiser
+        // EMBEDS (cole o iframe completo aqui como string)
+        const spotifyEmbed = null; // ex: '<iframe style="border-radius:12px" src="..." width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>'
+        const youtubeEmbed = null; // ex: '<iframe width="100%" height="315" src="..." title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+
+        // IMAGENS (com fallback caso não exista)
+        const heroImg = "./assets/img/hero-01.jpg";
+        const mentoringImg = "./assets/img/mentoring-01.jpg";
+        const speaker1 = "./assets/img/speaker-01.jpg";
+        const speaker2 = "./assets/img/speaker-02.jpg";
+
+        const Img = (props) => (
+          <img
+            {...props}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+          />
+        );
 
         return (
           <div className="min-h-screen">
@@ -289,8 +318,8 @@
             {/* HERO */}
             <section className="relative overflow-hidden">
               <div className="absolute inset-0">
-                <img
-                  src="./assets/img/hero-01.jpg"
+                <Img
+                  src={heroImg}
                   alt=""
                   className="h-full w-full object-cover"
                 />
@@ -319,13 +348,15 @@
                   </div>
 
                   <div className="mt-8 grid gap-2 text-sm text-white/75">
-                    <div className="flex gap-2"><span className="text-white/50">•</span><span>{t.philosophy.items[0]}</span></div>
-                    <div className="flex gap-2"><span className="text-white/50">•</span><span>{t.philosophy.items[1]}</span></div>
-                    <div className="flex gap-2"><span className="text-white/50">•</span><span>{t.philosophy.items[2]}</span></div>
+                    {t.philosophy.items.map((it, i) => (
+                      <div key={i} className="flex gap-2">
+                        <span className="text-white/50">•</span><span>{it}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                <div className="panel rounded-xl p-6 shadow-soft2 bg-white/10 border-white/15 backdrop-blur">
+                <div className="panel rounded-xl p-6 shadow-soft2 bg-white/10 border border-white/15 backdrop-blur">
                   <img src="./assets/brand/logo-dark.png" alt="Aline Data Scientist" className="h-20 w-auto" />
                   <h3 className="mt-4 font-semibold">{t.philosophy.title}</h3>
                   <ul className="mt-3 space-y-2 text-white/80 text-sm">
@@ -371,8 +402,8 @@
                 </div>
 
                 <div className="panel rounded-xl p-6 shadow-soft">
-                  <img
-                    src="./assets/img/mentoring-01.jpg"
+                  <Img
+                    src={mentoringImg}
                     alt="Mentoring"
                     className="w-full h-56 object-cover rounded-lg border border-line"
                   />
@@ -399,13 +430,13 @@
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <img src="./assets/img/speaker-01.jpg" alt="Speaking 1" className="w-full h-44 object-cover rounded-lg border border-line" />
-                  <img src="./assets/img/speaker-02.jpg" alt="Speaking 2" className="w-full h-44 object-cover rounded-lg border border-line" />
+                  <Img src={speaker1} alt="Speaking 1" className="w-full h-44 object-cover rounded-lg border border-line" />
+                  <Img src={speaker2} alt="Speaking 2" className="w-full h-44 object-cover rounded-lg border border-line" />
                   <div className="col-span-2 panel rounded-xl p-5 shadow-soft">
                     <div className="text-sm text-ink/70">
                       {lang === "en"
-                        ? "Tip: add testimonials as images in /assets/press/ and link them here."
-                        : "Dica: coloque depoimentos em imagem em /assets/press/ e linke aqui."}
+                        ? "Add testimonials as images later (e.g., /assets/img/testimonial-01.png) and link them here."
+                        : "Adicione depoimentos como imagens depois (ex.: /assets/img/testimonial-01.png) e linke aqui."}
                     </div>
                   </div>
                 </div>
@@ -452,15 +483,17 @@
                   <div className="panel rounded-xl p-6 shadow-soft">
                     <div className="font-semibold">Spotify</div>
                     <p className="mt-2 text-sm text-ink/70">
-                      {lang==="en" ? "Paste your Spotify embed iframe in the code (spotifyEmbed)." : "Cole o iframe do Spotify no código (spotifyEmbed)."}
+                      {lang==="en" ? "Paste your Spotify embed iframe in spotifyEmbed." : "Cole o iframe do Spotify em spotifyEmbed."}
                     </p>
+                    <Embed html={spotifyEmbed} />
                   </div>
 
                   <div className="panel rounded-xl p-6 shadow-soft">
                     <div className="font-semibold">YouTube</div>
                     <p className="mt-2 text-sm text-ink/70">
-                      {lang==="en" ? "Paste your YouTube embed iframe in the code (youtubeEmbed)." : "Cole o iframe do YouTube no código (youtubeEmbed)."}
+                      {lang==="en" ? "Paste your YouTube embed iframe in youtubeEmbed." : "Cole o iframe do YouTube em youtubeEmbed."}
                     </p>
+                    <Embed html={youtubeEmbed} />
                   </div>
                 </div>
               </div>
@@ -489,10 +522,9 @@
                     </select>
                     <textarea className="hairline rounded-md px-4 py-3 bg-white" rows="4" placeholder={lang==="en" ? "Message" : "Mensagem"}></textarea>
 
-                    <!--
-                      GitHub Pages não roda backend.
-                      Para receber mensagens, use Formspree/Tally/Getform e troque o action do form.
-                    -->
+                    {/* GitHub Pages não roda backend.
+                        Para receber mensagens, conecte esse form a Formspree/Tally/Getform e defina action/method.
+                    */}
 
                     <button type="button" className="rounded-lg px-5 py-3 btn-primary text-sm">
                       {t.contact.cta}
