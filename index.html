@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="pt">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Aline — IA Humanizada</title>
+    <title>Aline — Human-Centered AI</title>
 
     <!-- Tailwind (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,614 +12,814 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
-    <!-- Babel (para transpilar JSX no navegador) -->
+    <!-- Babel (JSX in-browser) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script>
+      // Tailwind config for your neon / high-ticket theme
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ink: {
+                950: "#060913",
+                900: "#070A16",
+                850: "#0A0E21",
+                800: "#0C1129",
+                700: "#121A3A"
+              },
+              line: "rgba(255,255,255,.10)",
+              text: {
+                100: "rgba(255,255,255,.92)",
+                200: "rgba(255,255,255,.78)",
+                300: "rgba(255,255,255,.60)",
+                400: "rgba(255,255,255,.45)"
+              },
+              neon: {
+                a: "#7C5CFF", // violet
+                b: "#4FE3FF", // electric cyan
+                c: "#B8A6FF"  // soft lilac
+              }
+            },
+            boxShadow: {
+              glow: "0 0 0 1px rgba(255,255,255,.10), 0 18px 80px rgba(124,92,255,.18), 0 10px 40px rgba(79,227,255,.10)",
+              glowStrong: "0 0 0 1px rgba(255,255,255,.12), 0 22px 100px rgba(124,92,255,.28), 0 14px 55px rgba(79,227,255,.16)"
+            },
+            borderRadius: {
+              xl2: "1.25rem"
+            },
+            fontFamily: {
+              sans: ["ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica", "Arial"]
+            }
+          }
+        }
+      };
+    </script>
+
+    <style>
+      :root { color-scheme: dark; }
+      body { background: #060913; }
+
+      /* Background: premium neon grid + aurora */
+      .bg-luxe {
+        position: relative;
+        background:
+          radial-gradient(1200px 700px at 25% 20%, rgba(79,227,255,.12), transparent 60%),
+          radial-gradient(900px 650px at 75% 35%, rgba(124,92,255,.18), transparent 60%),
+          radial-gradient(850px 650px at 55% 85%, rgba(184,166,255,.10), transparent 60%),
+          linear-gradient(180deg, #060913 0%, #070A16 70%, #060913 100%);
+      }
+
+      .bg-grid::before{
+        content:"";
+        position:absolute; inset:0;
+        background-image:
+          linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
+        background-size: 56px 56px;
+        opacity: .12;
+        mask-image: radial-gradient(900px 520px at 50% 20%, #000 35%, transparent 70%);
+        pointer-events:none;
+      }
+
+      .noise::after{
+        content:"";
+        position:absolute; inset:0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.20'/%3E%3C/svg%3E");
+        opacity:.08;
+        mix-blend-mode: overlay;
+        pointer-events:none;
+      }
+
+      .glass {
+        background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+        border: 1px solid rgba(255,255,255,.10);
+        backdrop-filter: blur(14px);
+      }
+
+      .hairline {
+        border: 1px solid rgba(255,255,255,.10);
+      }
+
+      .btn-primary {
+        background: linear-gradient(90deg, rgba(79,227,255,.95), rgba(124,92,255,.95));
+        color: #050812;
+        box-shadow: 0 18px 80px rgba(124,92,255,.18), 0 12px 45px rgba(79,227,255,.12);
+      }
+
+      .btn-primary:hover { filter: brightness(1.07); }
+
+      .btn-ghost {
+        border: 1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.03);
+      }
+      .btn-ghost:hover { background: rgba(255,255,255,.06); }
+
+      .chip {
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.04);
+      }
+
+      .grad-text {
+        background: linear-gradient(90deg, #4FE3FF, #7C5CFF);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+    </style>
   </head>
-  <body class="bg-white text-gray-900">
+
+  <body class="text-text-100 font-sans">
     <div id="root"></div>
 
-    <!-- Landing completa (JSX) -->
     <script type="text/babel">
-      // ===== COMPONENTES =====
+      // ===== UI building blocks =====
+      function Container({ children }) {
+        return <div className="max-w-6xl mx-auto px-4">{children}</div>;
+      }
+
+      function SectionTitle({ kicker, title, desc }) {
+        return (
+          <div className="mb-8">
+            {kicker ? (
+              <div className="text-xs tracking-[0.28em] uppercase text-text-300">{kicker}</div>
+            ) : null}
+            <h2 className="mt-2 text-2xl md:text-3xl font-semibold">{title}</h2>
+            {desc ? <p className="mt-2 text-sm md:text-base text-text-300 max-w-3xl">{desc}</p> : null}
+          </div>
+        );
+      }
 
       function Card({ title, desc, bullets, ctaLabel }) {
         return (
-          <div className="border rounded-3xl p-6 flex flex-col justify-between bg-white shadow-sm">
+          <div className="glass rounded-xl2 p-6 md:p-7 shadow-glow flex flex-col justify-between">
             <div>
-              <h3 className="font-medium text-lg">{title}</h3>
-              <p className="text-sm text-gray-600 mt-1">{desc}</p>
-              <ul className="mt-4 space-y-2 text-gray-700">
+              <h3 className="font-semibold text-lg">{title}</h3>
+              <p className="text-sm text-text-300 mt-2 leading-relaxed">{desc}</p>
+              <ul className="mt-5 space-y-2 text-sm text-text-200">
                 {bullets.map((b, i) => (
                   <li key={i} className="flex gap-2">
-                    <span>•</span>
+                    <span className="text-neon-b">•</span>
                     <span>{b}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <a
-              href="#contact"
-              className="mt-6 inline-flex rounded-2xl px-4 py-2 bg-black text-white text-sm w-fit hover:opacity-90"
-            >
+
+            <a href="#contact" className="mt-6 inline-flex rounded-xl2 px-4 py-2.5 btn-ghost text-sm w-fit">
               {ctaLabel}
             </a>
           </div>
         );
       }
 
-      function PackageCard({ name, desc, featured }) {
+      function PackageCard({ name, desc, featured, ctaLabel }) {
         return (
-          <div
-            className={`border rounded-3xl p-6 bg-white ${
-              featured ? "shadow-md ring-1 ring-black/5" : "shadow-sm"
-            }`}
-          >
-            <div className="flex items-baseline justify-between">
-              <h3 className="font-semibold text-xl">{name}</h3>
-              {featured && (
-                <span className="text-xs px-2 py-1 rounded-full border">Popular</span>
-              )}
+          <div className={`rounded-xl2 p-6 md:p-7 ${featured ? "glass shadow-glowStrong" : "glass shadow-glow"}`}>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="font-semibold text-xl">{name}</h3>
+                <p className="mt-2 text-sm text-text-300 leading-relaxed">{desc}</p>
+              </div>
+              {featured ? (
+                <span className="chip rounded-full px-3 py-1 text-xs text-text-200">Popular</span>
+              ) : null}
             </div>
-            <p className="mt-1 text-gray-600">{desc}</p>
-            <a
-              href="#contact"
-              className="mt-6 inline-flex rounded-2xl px-4 py-2 bg-black text-white text-sm w-fit hover:opacity-90"
-            >
-              Solicitar proposta
+
+            <a href="#contact" className="mt-6 inline-flex rounded-xl2 px-4 py-2.5 btn-primary text-sm font-semibold w-fit">
+              {ctaLabel}
             </a>
           </div>
         );
       }
 
-      // ===== LANDING =====
+      function Testimonial({ quote, name, role }) {
+        return (
+          <div className="glass rounded-xl2 p-6 shadow-glow">
+            <p className="text-sm md:text-base text-text-200 leading-relaxed">“{quote}”</p>
+            <div className="mt-4">
+              <div className="font-semibold">{name}</div>
+              {role ? <div className="text-sm text-text-300">{role}</div> : null}
+            </div>
+          </div>
+        );
+      }
+
+      function GalleryTile({ label }) {
+        return (
+          <div className="rounded-xl2 overflow-hidden hairline bg-gradient-to-br from-neon-a/10 via-white/0 to-neon-b/10 aspect-[4/5] flex items-end">
+            <div className="w-full p-4 text-xs text-text-300 bg-ink-900/40 backdrop-blur border-t border-line">
+              {label}
+            </div>
+          </div>
+        );
+      }
+
+      // ===== Landing =====
       function LandingAline() {
-        const [lang, setLang] = React.useState("pt");
+        // EN first by default
+        const [lang, setLang] = React.useState("en");
+        const [menuOpen, setMenuOpen] = React.useState(false);
 
         const t = React.useMemo(() => {
           const dict = {
-            pt: {
-              brand: "Aline — IA Humanizada",
-              nav: {
-                why: "Filosofia",
-                services: "Serviços",
-                packages: "Pacotes",
-                masterclass: "Masterclass",
-                mentoring: "Mentoria",
-                contact: "Contato",
-              },
-              hero: {
-                pre: "Estratégia • Governança • Valor",
-                title: "IA humanizada para líderes que buscam impacto real.",
-                subtitle:
-                  "Eu ajudo organizações a transformar visão em resultados — com gente no centro, dados bem cuidados e decisões que resistem ao tempo.",
-                cta1: "Agendar conversa",
-                cta2: "Baixar credenciais",
-              },
-              why: {
-                title: "Minha filosofia",
-                items: [
-                  "Pessoas antes de modelos: a tecnologia é meio, não fim.",
-                  "Clareza estratégica: problema bem definido, metade resolvido.",
-                  "Governança elegante: simples o suficiente para escalar.",
-                ],
-              },
-              ribbons: ["MLOps Oslo", "Rural Talks Podcast", "WiDS Oslo"],
-              services: {
-                title: "Serviços principais",
-                a: {
-                  title: "Retainer de IA Estratégica",
-                  desc: "Direção, governança e priorização. Ritmo executivo para fazer a IA acontecer com elegância.",
-                  bullets: ["Roadmap claro", "OKRs trimestrais", "Adoção > hype"],
-                },
-                b: {
-                  title: "Programa ML Canvas → Valor",
-                  desc: "Da hipótese ao plano de escala, com experimento responsável e critérios de go/no-go.",
-                  bullets: [
-                    "Alinhamento executivo",
-                    "Experimento 2–4 semanas",
-                    "Plano de escala",
-                  ],
-                },
-                c: {
-                  title: "Workshop Executivo",
-                  desc: "1 dia para alinhar visão, cultura e medidas de sucesso. Decisões práticas para os próximos 90 dias.",
-                  bullets: [
-                    "Cultura & estratégia",
-                    "Governança mínima viável",
-                    "Próximos passos",
-                  ],
-                },
-                d: {
-                  title: "Assessment de Modelos & Risco",
-                  desc: "Leitura independente de compliance, bias e robustez. Recomendações acionáveis e desenho de mitigação.",
-                  bullets: [
-                    "Checklist de conformidade",
-                    "Riscos priorizados",
-                    "Plano de mitigação",
-                  ],
-                },
-                e: {
-                  title: "Treinamento Corporativo",
-                  desc: "Trilhas sob medida para times de dados, risco e auditoria. Mão na massa com seus dados.",
-                  bullets: [
-                    "Frameworks práticos",
-                    "Templates & playbooks",
-                    "Certificado",
-                  ],
-                },
-                cta: "Solicitar proposta",
-              },
-              packages: {
-                title: "Pacotes-assinatura",
-                starter: {
-                  name: "Starter",
-                  desc: "1 dia de descoberta e mapeamento do caso crítico para destravar decisões.",
-                },
-                pro: {
-                  name: "Pro",
-                  desc: "4 semanas para sair com plano de piloto, dono, métricas e próximos passos.",
-                },
-                enterprise: {
-                  name: "Enterprise",
-                  desc: "8 semanas com experimento, governança e critérios de escala — sem improviso.",
-                },
-                note: "Fechamento via SOW com escopo e cronograma.",
-              },
-              masterclass: {
-                title: "Masterclass ML Canvas (3h, ao vivo)",
-                date: "17/09/2025 — 18:00–21:00 (Oslo)",
-                bullets: [
-                  "Canvas preenchido para 1 caso real",
-                  "Playbook de experimento (2–4 semanas)",
-                  "Checklist de governança",
-                  "Critérios de go/no-go",
-                ],
-                badge: "Vagas limitadas",
-                cta: "Aplicar para a turma",
-              },
-              mentoring: {
-                title: "Mentoria 1:1 — Carreira em IA (60 min)",
-                desc: "Sessão estratégica e direta ao ponto para definir seus próximos 90 dias.",
-                note: "Agenda mensal com vagas limitadas.",
-                cta: "Reservar sessão",
-              },
-              contact: {
-                title: "Vamos começar?",
-                sub: "Atendimento global (PT/EN/ES) — base em Oslo",
-                steps: ["Conversa de 30 min", "SOW com entregáveis", "Kick-off"],
-                cta: "Falar comigo",
-              },
-              footer: { rights: "© " },
-              toggles: { language: "Idioma" },
-            },
             en: {
-              brand: "Aline — Human-Centered AI",
+              brandTop: "Aline",
+              brandSub: "Human-Centered AI",
               nav: {
                 why: "Philosophy",
                 services: "Services",
                 packages: "Packages",
-                masterclass: "Masterclass",
-                mentoring: "Mentoring",
-                contact: "Contact",
+                mentorship: "Mentorship",
+                speaking: "Speaking",
+                contact: "Contact"
               },
               hero: {
-                pre: "Strategy • Governance • Value",
-                title: "Human-centered AI for leaders who want real impact.",
+                kicker: "Strategy • Governance • Value",
+                titleA: "Human-centered AI",
+                titleB: "built to ship.",
                 subtitle:
-                  "I help organizations turn vision into outcomes — with people at the center, well-governed data, and decisions that last.",
+                  "I help leaders turn AI into measurable business value—through strategic clarity, elegant governance, and execution that scales.",
                 cta1: "Book a call",
-                cta2: "Download creds",
+                cta2: "Request proposal"
               },
+              credibility: ["Based in Oslo", "Global delivery (EN/PT)", "Audit • Risk • AI Leadership"],
               why: {
                 title: "My philosophy",
                 items: [
                   "People before models: technology is the means, not the end.",
                   "Strategic clarity: a well-framed problem is half solved.",
-                  "Elegant governance: simple enough to scale.",
-                ],
+                  "Elegant governance: simple enough to scale, strong enough to last."
+                ]
               },
-              ribbons: ["MLOps Oslo", "Rural Talks Podcast", "WiDS Oslo"],
               services: {
                 title: "Core services",
+                cta: "Request proposal",
                 a: {
                   title: "Strategic AI Retainer",
-                  desc: "Direction, governance and prioritization. Executive rhythm to make AI happen with elegance.",
-                  bullets: ["Clear roadmap", "Quarterly OKRs", "Adoption over hype"],
+                  desc: "Executive rhythm for AI delivery: prioritization, governance, alignment, and decisions.",
+                  bullets: ["Roadmap + ownership", "Quarterly OKRs", "Adoption over hype"]
                 },
                 b: {
                   title: "ML Canvas → Value Program",
                   desc: "From hypothesis to scale plan with responsible experimentation and go/no-go criteria.",
-                  bullets: [
-                    "Executive alignment",
-                    "2–4 week experiment",
-                    "Scale plan",
-                  ],
+                  bullets: ["Executive alignment", "2–4 week experiment", "Scale plan"]
                 },
                 c: {
                   title: "Executive Workshop",
-                  desc: "One day to align vision, culture and success measures. Practical decisions for the next 90 days.",
-                  bullets: [
-                    "Culture & strategy",
-                    "Minimum viable governance",
-                    "Next steps",
-                  ],
-                },
-                d: {
-                  title: "Model & Risk Assessment",
-                  desc: "Independent read on compliance, bias and robustness. Actionable recommendations and mitigation design.",
-                  bullets: [
-                    "Compliance checklist",
-                    "Prioritized risks",
-                    "Mitigation plan",
-                  ],
-                },
-                e: {
-                  title: "Corporate Training",
-                  desc: "Tailored tracks for data, risk and audit teams. Hands-on with your data.",
-                  bullets: [
-                    "Practical frameworks",
-                    "Templates & playbooks",
-                    "Certificate",
-                  ],
-                },
-                cta: "Request proposal",
+                  desc: "One day to align vision, operating model, and success metrics for the next 90 days.",
+                  bullets: ["Operating model", "Minimum viable governance", "90-day execution plan"]
+                }
               },
               packages: {
                 title: "Signature packages",
-                starter: {
-                  name: "Starter",
-                  desc: "1-day discovery & case mapping to unlock decisive moves.",
-                },
-                pro: {
-                  name: "Pro",
-                  desc: "4 weeks to a pilot plan with owner, metrics and next steps.",
-                },
-                enterprise: {
-                  name: "Enterprise",
-                  desc: "8 weeks with experiment, governance and scale criteria — no guesswork.",
-                },
                 note: "Engagements formalized via SOW with scope and timeline.",
+                cta: "Request proposal",
+                starter: { name: "Starter", desc: "1-day discovery & case mapping to unlock decisive moves." },
+                pro: { name: "Pro", desc: "4 weeks to a pilot plan with owner, metrics and next steps." },
+                enterprise: { name: "Enterprise", desc: "8 weeks with experiment, governance and scale criteria — no guesswork." }
               },
-              masterclass: {
-                title: "ML Canvas Masterclass (3h, live)",
-                date: "Sept 17, 2025 — 18:00–21:00 (Oslo)",
+              mentorship: {
+                kicker: "Application-based",
+                title: "Mentorship",
+                desc:
+                  "High-performance mentoring for careers in AI and tech. Primary focus: women in technology. Men are also welcome to apply.",
                 bullets: [
-                  "Canvas filled for 1 real case",
-                  "2–4 week experiment playbook",
-                  "Governance checklist",
-                  "Go/no-go criteria",
+                  "Positioning: executive narrative and career strategy",
+                  "Execution: structured weekly plan + accountability",
+                  "Portfolio: credibility assets (projects, writing, visibility)",
+                  "Interviews: story, confidence, negotiation"
                 ],
-                badge: "Limited seats",
-                cta: "Apply to join",
+                apply: "Apply for mentorship",
+                testimonialsTitle: "Mentorship testimonials",
+                testimonials: [
+                  {
+                    quote:
+                      "My positioning changed completely. Interviews became a strategic conversation, not an interrogation.",
+                    name: "Mentee",
+                    role: "Data professional"
+                  },
+                  {
+                    quote:
+                      "The structure removed noise. I executed more in 30 days than in the previous 6 months.",
+                    name: "Mentee",
+                    role: "Software engineer"
+                  }
+                ]
               },
-              mentoring: {
-                title: "1:1 Mentoring — AI Career (60 min)",
-                desc: "Strategic, straight-to-the-point session to define your next 90 days.",
-                note: "Monthly availability with limited slots.",
-                cta: "Book session",
+              speaking: {
+                kicker: "Keynote speaker",
+                title: "Speaking",
+                desc:
+                  "Keynotes and talks (English or Portuguese) on Human-centered AI, Governance, and Digital Transformation.",
+                topicsTitle: "Signature topics",
+                topics: [
+                  "AI Governance That Ships",
+                  "Human-centered AI for leaders",
+                  "From data to decisions: operating model for scale",
+                  "Career in AI: building real credibility"
+                ],
+                galleryTitle: "Event gallery",
+                feedbackTitle: "Audience feedback",
+                feedback: [
+                  {
+                    quote:
+                      "Clear, strategic, and practical. Governance finally felt connected to delivery.",
+                    name: "Event attendee",
+                    role: "Innovation manager"
+                  },
+                  {
+                    quote:
+                      "One of the strongest sessions of the event. Frameworks that leaders can use immediately.",
+                    name: "Event attendee",
+                    role: "Tech executive"
+                  }
+                ],
+                invite: "Invite me to speak"
               },
               contact: {
-                title: "Shall we begin?",
-                sub: "Global availability (PT/EN/ES) — based in Oslo",
-                steps: ["30-min conversation", "SOW with deliverables", "Kick-off"],
-                cta: "Message me",
+                title: "Let’s start.",
+                sub: "Global availability (EN/PT) — based in Oslo",
+                placeholders: { name: "Name", email: "Email", msg: "Message" },
+                cta: "Send message",
+                stepsTitle: "What happens next",
+                steps: ["30-min conversation", "SOW with deliverables", "Kick-off"]
               },
-              footer: { rights: "© " },
-              toggles: { language: "Language" },
+              footer: { rights: "All rights reserved." }
             },
+
+            pt: {
+              brandTop: "Aline",
+              brandSub: "IA Humanizada",
+              nav: {
+                why: "Filosofia",
+                services: "Serviços",
+                packages: "Pacotes",
+                mentorship: "Mentoria",
+                speaking: "Palestras",
+                contact: "Contato"
+              },
+              hero: {
+                kicker: "Estratégia • Governança • Valor",
+                titleA: "IA humanizada",
+                titleB: "que sai do papel.",
+                subtitle:
+                  "Eu ajudo líderes a transformar IA em valor mensurável — com clareza estratégica, governança elegante e execução que escala.",
+                cta1: "Agendar conversa",
+                cta2: "Solicitar proposta"
+              },
+              credibility: ["Base em Oslo", "Entrega global (EN/PT)", "Auditoria • Risco • Liderança em IA"],
+              why: {
+                title: "Minha filosofia",
+                items: [
+                  "Pessoas antes de modelos: tecnologia é meio, não fim.",
+                  "Clareza estratégica: problema bem definido, metade resolvido.",
+                  "Governança elegante: simples para escalar, forte para durar."
+                ]
+              },
+              services: {
+                title: "Serviços principais",
+                cta: "Solicitar proposta",
+                a: {
+                  title: "Retainer de IA Estratégica",
+                  desc: "Ritmo executivo para entregar IA: priorização, governança, alinhamento e decisões.",
+                  bullets: ["Roadmap + ownership", "OKRs trimestrais", "Adoção > hype"]
+                },
+                b: {
+                  title: "Programa ML Canvas → Valor",
+                  desc: "Da hipótese ao plano de escala com experimento responsável e critérios de go/no-go.",
+                  bullets: ["Alinhamento executivo", "Experimento 2–4 semanas", "Plano de escala"]
+                },
+                c: {
+                  title: "Workshop Executivo",
+                  desc: "1 dia para alinhar visão, operating model e métricas de sucesso dos próximos 90 dias.",
+                  bullets: ["Operating model", "Governança mínima viável", "Plano de execução 90 dias"]
+                }
+              },
+              packages: {
+                title: "Pacotes-assinatura",
+                note: "Fechamento via SOW com escopo e cronograma.",
+                cta: "Solicitar proposta",
+                starter: { name: "Starter", desc: "1 dia de descoberta e mapeamento do caso crítico para destravar decisões." },
+                pro: { name: "Pro", desc: "4 semanas para sair com plano de piloto, dono, métricas e próximos passos." },
+                enterprise: { name: "Enterprise", desc: "8 semanas com experimento, governança e critérios de escala — sem improviso." }
+              },
+              mentorship: {
+                kicker: "Com aplicação",
+                title: "Mentoria",
+                desc:
+                  "Mentoria de alta performance para carreira em IA e tecnologia. Foco principal: mulheres na tecnologia. Homens também podem aplicar.",
+                bullets: [
+                  "Posicionamento: narrativa executiva e estratégia de carreira",
+                  "Execução: plano semanal estruturado + accountability",
+                  "Portfólio: ativos de credibilidade (projetos, escrita, visibilidade)",
+                  "Entrevistas: história, confiança, negociação"
+                ],
+                apply: "Aplicar para mentoria",
+                testimonialsTitle: "Depoimentos da mentoria",
+                testimonials: [
+                  {
+                    quote:
+                      "Meu posicionamento mudou completamente. Entrevista virou conversa estratégica.",
+                    name: "Mentorada",
+                    role: "Profissional de dados"
+                  },
+                  {
+                    quote:
+                      "A estrutura tirou o ruído. Eu executei mais em 30 dias do que em 6 meses.",
+                    name: "Mentorado",
+                    role: "Engenheiro de software"
+                  }
+                ]
+              },
+              speaking: {
+                kicker: "Keynote speaker",
+                title: "Palestras",
+                desc:
+                  "Keynotes e palestras (em inglês ou português) sobre IA humanizada, governança e transformação digital.",
+                topicsTitle: "Tópicos assinatura",
+                topics: [
+                  "Governança de IA que sai do papel",
+                  "IA humanizada para líderes",
+                  "De dados a decisões: operating model para escala",
+                  "Carreira em IA: construindo credibilidade"
+                ],
+                galleryTitle: "Galeria de eventos",
+                feedbackTitle: "O que dizem",
+                feedback: [
+                  {
+                    quote:
+                      "Claro, estratégico e prático. Finalmente governança conectada com entrega.",
+                    name: "Participante",
+                    role: "Gestora de inovação"
+                  },
+                  {
+                    quote:
+                      "Uma das palestras mais fortes do evento. Frameworks que líderes aplicam na hora.",
+                    name: "Participante",
+                    role: "Executivo de tecnologia"
+                  }
+                ],
+                invite: "Me convide para palestrar"
+              },
+              contact: {
+                title: "Vamos começar?",
+                sub: "Atendimento global (EN/PT) — base em Oslo",
+                placeholders: { name: "Nome", email: "Email", msg: "Mensagem" },
+                cta: "Enviar mensagem",
+                stepsTitle: "Próximos passos",
+                steps: ["Conversa de 30 min", "SOW com entregáveis", "Kick-off"]
+              },
+              footer: { rights: "Todos os direitos reservados." }
+            }
           };
           return dict[lang];
         }, [lang]);
 
-        return (
-          <div className="min-h-screen bg-white text-gray-900">
-            {/* Header */}
-            <header className="sticky top-0 z-30 backdrop-blur bg-white/80 border-b">
-              <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-                <a href="#" className="font-semibold text-lg tracking-tight">
-                  {t.brand}
-                </a>
-                <nav className="hidden md:flex gap-6 text-sm">
-                  <a href="#why" className="hover:opacity-70">
-                    {t.nav.why}
-                  </a>
-                  <a href="#services" className="hover:opacity-70">
-                    {t.nav.services}
-                  </a>
-                  <a href="#packages" className="hover:opacity-70">
-                    {t.nav.packages}
-                  </a>
-                  <a href="#masterclass" className="hover:opacity-70">
-                    {t.nav.masterclass}
-                  </a>
-                  <a href="#mentoring" className="hover:opacity-70">
-                    {t.nav.mentoring}
-                  </a>
-                  <a href="#contact" className="hover:opacity-70">
-                    {t.nav.contact}
-                  </a>
-                </nav>
-                <div className="flex items-center gap-2">
-                  {/* Language toggle */}
-                  <select
-                    aria-label={t.toggles.language}
-                    className="border rounded-lg px-2 py-1 text-sm"
-                    value={lang}
-                    onChange={(e) => setLang(e.target.value)}
-                  >
-                    <option value="pt">PT</option>
-                    <option value="en">EN</option>
-                  </select>
-                  <a
-                    href="#contact"
-                    className="ml-2 inline-flex items-center rounded-xl px-3 py-2 bg-black text-white text-sm hover:opacity-90"
-                  >
-                    {t.hero.cta1}
-                  </a>
-                </div>
-              </div>
-            </header>
+        const NavLink = ({ href, label }) => (
+          <a
+            href={href}
+            className="text-sm text-text-300 hover:text-text-100 transition"
+            onClick={() => setMenuOpen(false)}
+          >
+            {label}
+          </a>
+        );
 
-            {/* Hero */}
-            <section className="relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100" />
-              <div className="relative max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
-                <div>
-                  <p className="uppercase tracking-widest text-xs text-gray-600">
-                    {t.hero.pre}
-                  </p>
-                  <h1 className="mt-2 text-4xl md:text-5xl font-semibold leading-tight">
-                    {t.hero.title}
-                  </h1>
-                  <p className="mt-5 text-lg text-gray-700 max-w-xl">
-                    {t.hero.subtitle}
-                  </p>
-                  <div className="mt-7 flex gap-3">
+        return (
+          <div className="min-h-screen bg-luxe bg-grid noise">
+            {/* Header */}
+            <header className="sticky top-0 z-40 border-b border-line bg-ink-900/70 backdrop-blur">
+              <Container>
+                <div className="py-4 flex items-center justify-between">
+                  <a href="#top" className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-xl bg-white/5 border border-line shadow-glow" />
+                    <div className="leading-tight">
+                      <div className="text-sm font-semibold tracking-wide">{t.brandTop}</div>
+                      <div className="text-[11px] tracking-[0.26em] uppercase text-text-300">{t.brandSub}</div>
+                    </div>
+                  </a>
+
+                  {/* Desktop nav */}
+                  <nav className="hidden lg:flex items-center gap-7">
+                    <NavLink href="#why" label={t.nav.why} />
+                    <NavLink href="#services" label={t.nav.services} />
+                    <NavLink href="#packages" label={t.nav.packages} />
+                    <NavLink href="#mentorship" label={t.nav.mentorship} />
+                    <NavLink href="#speaking" label={t.nav.speaking} />
+                    <NavLink href="#contact" label={t.nav.contact} />
+                  </nav>
+
+                  <div className="flex items-center gap-2">
+                    <select
+                      className="chip rounded-xl px-3 py-2 text-xs text-text-200 bg-transparent"
+                      value={lang}
+                      onChange={(e) => setLang(e.target.value)}
+                      aria-label="Language"
+                    >
+                      <option value="en">EN</option>
+                      <option value="pt">PT</option>
+                    </select>
+
                     <a
                       href="#contact"
-                      className="rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
-                    >
-                      {t.hero.cta1}
-                    </a>
-                    <a
-                      href="#"
-                      className="rounded-2xl px-5 py-3 border hover:bg-gray-50"
+                      className="hidden sm:inline-flex rounded-xl px-4 py-2 text-sm font-semibold btn-primary"
                     >
                       {t.hero.cta2}
                     </a>
+
+                    <button
+                      className="lg:hidden inline-flex items-center justify-center rounded-xl px-3 py-2 btn-ghost"
+                      onClick={() => setMenuOpen(!menuOpen)}
+                      aria-label="Menu"
+                    >
+                      <span className="text-sm text-text-100">{menuOpen ? "Close" : "Menu"}</span>
+                    </button>
                   </div>
                 </div>
-                {/* Card de filosofia com id para ancoragem */}
-                <div
-                  id="why"
-                  className="p-6 border rounded-3xl shadow-sm bg-white/70 backdrop-blur"
-                >
-                  <h3 className="font-medium">{t.why.title}</h3>
-                  <ul className="mt-3 space-y-2 text-gray-700">
-                    {t.why.items.map((it, i) => (
-                      <li key={i} className="flex gap-2">
-                        <span>•</span>
-                        <span>{it}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </section>
 
-            {/* Ribbons / prova social */}
-            <section className="border-t">
-              <div className="max-w-6xl mx-auto px-4 py-6 flex flex-wrap items-center gap-6 text-xs uppercase tracking-widest text-gray-500">
-                {t.ribbons.map((r, i) => (
-                  <span key={i} className="px-3 py-2 rounded-full border bg-white">
-                    {r}
-                  </span>
-                ))}
-              </div>
+                {/* Mobile menu */}
+                {menuOpen ? (
+                  <div className="lg:hidden pb-4">
+                    <div className="glass rounded-xl2 p-4 flex flex-col gap-3">
+                      <NavLink href="#why" label={t.nav.why} />
+                      <NavLink href="#services" label={t.nav.services} />
+                      <NavLink href="#packages" label={t.nav.packages} />
+                      <NavLink href="#mentorship" label={t.nav.mentorship} />
+                      <NavLink href="#speaking" label={t.nav.speaking} />
+                      <NavLink href="#contact" label={t.nav.contact} />
+                      <a href="#contact" className="mt-2 inline-flex rounded-xl px-4 py-2 text-sm font-semibold btn-primary">
+                        {t.hero.cta2}
+                      </a>
+                    </div>
+                  </div>
+                ) : null}
+              </Container>
+            </header>
+
+            {/* Hero */}
+            <section id="top" className="pt-10 md:pt-16 pb-12 md:pb-16">
+              <Container>
+                <div className="grid lg:grid-cols-2 gap-10 items-center">
+                  <div>
+                    <div className="text-xs tracking-[0.28em] uppercase text-text-300">
+                      {t.hero.kicker}
+                    </div>
+
+                    <h1 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05]">
+                      <span className="grad-text">{t.hero.titleA}</span>{" "}
+                      <span className="text-text-100">{t.hero.titleB}</span>
+                    </h1>
+
+                    <p className="mt-5 text-base md:text-lg text-text-200 max-w-xl leading-relaxed">
+                      {t.hero.subtitle}
+                    </p>
+
+                    <div className="mt-7 flex flex-col sm:flex-row gap-3">
+                      <a href="#contact" className="inline-flex justify-center rounded-xl px-5 py-3 btn-primary font-semibold">
+                        {t.hero.cta1}
+                      </a>
+                      <a href="#services" className="inline-flex justify-center rounded-xl px-5 py-3 btn-ghost">
+                        {t.nav.services}
+                      </a>
+                    </div>
+
+                    <div className="mt-8 flex flex-wrap gap-2">
+                      {t.credibility.map((c, i) => (
+                        <span key={i} className="chip rounded-full px-3 py-2 text-xs text-text-200">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Philosophy card */}
+                  <div id="why" className="glass rounded-xl2 p-7 md:p-9 shadow-glow">
+                    <div className="text-xs tracking-[0.28em] uppercase text-text-300">
+                      {lang === "en" ? "Philosophy" : "Filosofia"}
+                    </div>
+                    <h3 className="mt-2 text-lg md:text-xl font-semibold">{t.why.title}</h3>
+                    <ul className="mt-5 space-y-3 text-text-200">
+                      {t.why.items.map((it, i) => (
+                        <li key={i} className="flex gap-3">
+                          <span className="text-neon-b">•</span>
+                          <span className="text-sm md:text-base leading-relaxed">{it}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </Container>
             </section>
 
             {/* Services */}
-            <section id="services" className="border-t">
-              <div className="max-w-6xl mx-auto px-4 py-14">
-                <h2 className="text-2xl md:text-3xl font-semibold">
-                  {t.services.title}
-                </h2>
-                <div className="grid md:grid-cols-3 gap-6 mt-8">
-                  <Card
-                    title={t.services.a.title}
-                    desc={t.services.a.desc}
-                    bullets={t.services.a.bullets}
-                    ctaLabel={t.services.cta}
-                  />
-                  <Card
-                    title={t.services.b.title}
-                    desc={t.services.b.desc}
-                    bullets={t.services.b.bullets}
-                    ctaLabel={t.services.cta}
-                  />
-                  <Card
-                    title={t.services.c.title}
-                    desc={t.services.c.desc}
-                    bullets={t.services.c.bullets}
-                    ctaLabel={t.services.cta}
-                  />
-                  <Card
-                    title={t.services.d.title}
-                    desc={t.services.d.desc}
-                    bullets={t.services.d.bullets}
-                    ctaLabel={t.services.cta}
-                  />
-                  <Card
-                    title={t.services.e.title}
-                    desc={t.services.e.desc}
-                    bullets={t.services.e.bullets}
-                    ctaLabel={t.services.cta}
-                  />
+            <section id="services" className="py-14 border-t border-line">
+              <Container>
+                <SectionTitle
+                  kicker={lang === "en" ? "For companies" : "Para empresas"}
+                  title={t.services.title}
+                  desc={lang === "en"
+                    ? "High-leverage engagements to align leadership, ship responsibly, and scale with confidence."
+                    : "Engajamentos de alto impacto para alinhar liderança, entregar com responsabilidade e escalar com confiança."
+                  }
+                />
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <Card title={t.services.a.title} desc={t.services.a.desc} bullets={t.services.a.bullets} ctaLabel={t.services.cta} />
+                  <Card title={t.services.b.title} desc={t.services.b.desc} bullets={t.services.b.bullets} ctaLabel={t.services.cta} />
+                  <Card title={t.services.c.title} desc={t.services.c.desc} bullets={t.services.c.bullets} ctaLabel={t.services.cta} />
                 </div>
-              </div>
+              </Container>
             </section>
 
             {/* Packages */}
-            <section id="packages" className="border-t bg-gray-50">
-              <div className="max-w-6xl mx-auto px-4 py-14">
-                <h2 className="text-2xl md:text-3xl font-semibold">
-                  {t.packages.title}
-                </h2>
-                <div className="grid md:grid-cols-3 gap-6 mt-8">
-                  <PackageCard
-                    name={t.packages.starter.name}
-                    desc={t.packages.starter.desc}
-                  />
-                  <PackageCard
-                    name={t.packages.pro.name}
-                    desc={t.packages.pro.desc}
-                    featured
-                  />
-                  <PackageCard
-                    name={t.packages.enterprise.name}
-                    desc={t.packages.enterprise.desc}
-                  />
+            <section id="packages" className="py-14 border-t border-line">
+              <Container>
+                <SectionTitle
+                  kicker={lang === "en" ? "Signature" : "Assinatura"}
+                  title={t.packages.title}
+                  desc={t.packages.note}
+                />
+                <div className="grid md:grid-cols-3 gap-6">
+                  <PackageCard name={t.packages.starter.name} desc={t.packages.starter.desc} ctaLabel={t.packages.cta} />
+                  <PackageCard name={t.packages.pro.name} desc={t.packages.pro.desc} featured ctaLabel={t.packages.cta} />
+                  <PackageCard name={t.packages.enterprise.name} desc={t.packages.enterprise.desc} ctaLabel={t.packages.cta} />
                 </div>
-                <p className="text-sm text-gray-600 mt-4">{t.packages.note}</p>
-              </div>
+              </Container>
             </section>
 
-            {/* Masterclass */}
-            <section id="masterclass" className="border-t">
-              <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-semibold">
-                    {t.masterclass.title}
-                  </h2>
-                  <p className="mt-1 text-gray-700">{t.masterclass.date}</p>
-                  <ul className="mt-4 space-y-2 text-gray-700">
-                    {t.masterclass.bullets.map((b, i) => (
-                      <li key={i} className="flex gap-2">
-                        <span>•</span>
-                        <span>{b}</span>
-                      </li>
+            {/* Mentorship */}
+            <section id="mentorship" className="py-14 border-t border-line">
+              <Container>
+                <SectionTitle
+                  kicker={t.mentorship.kicker}
+                  title={t.mentorship.title}
+                  desc={t.mentorship.desc}
+                />
+
+                <div className="grid lg:grid-cols-2 gap-6">
+                  <div className="glass rounded-xl2 p-7 md:p-9 shadow-glow">
+                    <div className="text-sm font-semibold">
+                      {lang === "en" ? "What you get" : "O que você recebe"}
+                    </div>
+                    <ul className="mt-4 space-y-3 text-text-200">
+                      {t.mentorship.bullets.map((b, i) => (
+                        <li key={i} className="flex gap-3">
+                          <span className="text-neon-b">•</span>
+                          <span className="text-sm md:text-base leading-relaxed">{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <a href="#contact" className="mt-6 inline-flex rounded-xl px-5 py-3 btn-primary font-semibold">
+                      {t.mentorship.apply}
+                    </a>
+
+                    <div className="mt-5 text-xs text-text-300">
+                      {lang === "en"
+                        ? "Application-based. Limited spots monthly."
+                        : "Com aplicação. Vagas limitadas por mês."}
+                    </div>
+                  </div>
+
+                  <div className="grid gap-6">
+                    <div className="text-sm font-semibold text-text-100">{t.mentorship.testimonialsTitle}</div>
+                    <div className="grid gap-6">
+                      {t.mentorship.testimonials.map((x, i) => (
+                        <Testimonial key={i} quote={x.quote} name={x.name} role={x.role} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </Container>
+            </section>
+
+            {/* Speaking */}
+            <section id="speaking" className="py-14 border-t border-line">
+              <Container>
+                <SectionTitle
+                  kicker={t.speaking.kicker}
+                  title={t.speaking.title}
+                  desc={t.speaking.desc}
+                />
+
+                <div className="grid lg:grid-cols-2 gap-6 items-start">
+                  <div className="glass rounded-xl2 p-7 md:p-9 shadow-glow">
+                    <div className="text-sm font-semibold">{t.speaking.topicsTitle}</div>
+                    <ul className="mt-4 space-y-3 text-text-200">
+                      {t.speaking.topics.map((topic, i) => (
+                        <li key={i} className="flex gap-3">
+                          <span className="text-neon-a">•</span>
+                          <span className="text-sm md:text-base leading-relaxed">{topic}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <a href="#contact" className="mt-6 inline-flex rounded-xl px-5 py-3 btn-primary font-semibold">
+                      {t.speaking.invite}
+                    </a>
+                  </div>
+
+                  <div>
+                    <div className="text-sm font-semibold mb-4">{t.speaking.galleryTitle}</div>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <GalleryTile label={lang === "en" ? "Add event photo 1" : "Adicionar foto 1"} />
+                      <GalleryTile label={lang === "en" ? "Add event photo 2" : "Adicionar foto 2"} />
+                      <div className="sm:col-span-2">
+                        <div className="rounded-xl2 overflow-hidden hairline bg-gradient-to-br from-neon-b/10 via-white/0 to-neon-a/10 aspect-[16/9] flex items-end">
+                          <div className="w-full p-4 text-xs text-text-300 bg-ink-900/40 backdrop-blur border-t border-line">
+                            {lang === "en" ? "Add wide event photo / stage shot" : "Adicionar foto horizontal / palco"}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10">
+                  <div className="text-sm font-semibold mb-4">{t.speaking.feedbackTitle}</div>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {t.speaking.feedback.map((x, i) => (
+                      <Testimonial key={i} quote={x.quote} name={x.name} role={x.role} />
                     ))}
-                  </ul>
-                  <div className="mt-6 flex gap-3 items-center">
-                    <span className="inline-flex items-center px-4 py-2 rounded-2xl border text-sm bg-white">
-                      {t.masterclass.badge}
-                    </span>
-                    <a
-                      href="#"
-                      className="rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
-                    >
-                      {t.masterclass.cta}
-                    </a>
                   </div>
                 </div>
-                <div className="p-6 border rounded-3xl shadow-sm bg-gradient-to-br from-gray-50 to-white">
-                  <h3 className="font-medium">Agenda</h3>
-                  <ol className="mt-3 space-y-2 text-gray-700 list-decimal list-inside">
-                    <li>Fundamentos e anti-padrões</li>
-                    <li>ML Canvas na prática</li>
-                    <li>Mão na massa: seu caso real</li>
-                    <li>Governança e risco</li>
-                    <li>Critérios de go/no-go</li>
-                  </ol>
-                </div>
-              </div>
-            </section>
-
-            {/* Mentoring */}
-            <section id="mentoring" className="border-t bg-gray-50">
-              <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-semibold">
-                    {t.mentoring.title}
-                  </h2>
-                  <p className="mt-2 text-gray-700">{t.mentoring.desc}</p>
-                  <p className="mt-1 text-gray-600 text-sm">{t.mentoring.note}</p>
-                  <div className="mt-6 flex gap-3 items-center">
-                    <a
-                      href="#"
-                      className="rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
-                    >
-                      {t.mentoring.cta}
-                    </a>
-                  </div>
-                </div>
-                <div className="p-6 border rounded-3xl shadow-sm bg-white">
-                  <h3 className="font-medium">Pré-work</h3>
-                  <ul className="mt-3 space-y-2 text-gray-700">
-                    <li>• Objetivos dos próximos 90 dias</li>
-                    <li>• Desafios atuais e bloqueios</li>
-                    <li>• Perfil/LinkedIn e histórico</li>
-                    <li>• Expectativas da sessão</li>
-                  </ul>
-                </div>
-              </div>
+              </Container>
             </section>
 
             {/* Contact */}
-            <section id="contact" className="border-t">
-              <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-semibold">
-                    {t.contact.title}
-                  </h2>
-                  <p className="mt-2 text-gray-700">{t.contact.sub}</p>
-                  <form className="mt-6 grid gap-3 max-w-md">
-                    <input
-                      className="border rounded-xl px-4 py-3"
-                      placeholder={lang === "pt" ? "Nome" : "Name"}
+            <section id="contact" className="py-14 border-t border-line">
+              <Container>
+                <div className="grid lg:grid-cols-2 gap-8 items-start">
+                  <div>
+                    <SectionTitle
+                      kicker={lang === "en" ? "Contact" : "Contato"}
+                      title={t.contact.title}
+                      desc={t.contact.sub}
                     />
-                    <input className="border rounded-xl px-4 py-3" placeholder="Email" />
-                    <textarea
-                      className="border rounded-xl px-4 py-3"
-                      placeholder={lang === "pt" ? "Mensagem" : "Message"}
-                      rows="4"
-                    />
-                    <button
-                      type="button"
-                      className="rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
-                    >
-                      {t.contact.cta}
-                    </button>
-                    <p className="text-xs text-gray-500">
-                      * LinkedIn/Instagram DM também funciona.
-                    </p>
-                  </form>
+
+                    <form className="grid gap-3 max-w-lg">
+                      <input
+                        className="glass rounded-xl px-4 py-3 text-sm text-text-100 placeholder:text-text-400 outline-none focus:ring-2 focus:ring-neon-b/40"
+                        placeholder={t.contact.placeholders.name}
+                      />
+                      <input
+                        className="glass rounded-xl px-4 py-3 text-sm text-text-100 placeholder:text-text-400 outline-none focus:ring-2 focus:ring-neon-b/40"
+                        placeholder={t.contact.placeholders.email}
+                      />
+                      <textarea
+                        className="glass rounded-xl px-4 py-3 text-sm text-text-100 placeholder:text-text-400 outline-none focus:ring-2 focus:ring-neon-b/40"
+                        placeholder={t.contact.placeholders.msg}
+                        rows="5"
+                      />
+                      <button
+                        type="button"
+                        className="rounded-xl px-5 py-3 btn-primary font-semibold"
+                      >
+                        {t.contact.cta}
+                      </button>
+                      <p className="text-xs text-text-400">
+                        {lang === "en" ? "* LinkedIn/Instagram DM also works." : "* DM no LinkedIn/Instagram também funciona."}
+                      </p>
+                    </form>
+                  </div>
+
+                  <div className="glass rounded-xl2 p-7 md:p-9 shadow-glow">
+                    <div className="text-sm font-semibold">{t.contact.stepsTitle}</div>
+                    <ol className="mt-4 space-y-3 text-text-200 list-decimal list-inside">
+                      {t.contact.steps.map((s, i) => (
+                        <li key={i} className="text-sm md:text-base leading-relaxed">{s}</li>
+                      ))}
+                    </ol>
+
+                    <div className="mt-6 chip rounded-xl2 p-5 text-sm text-text-200 leading-relaxed">
+                      {lang === "en"
+                        ? "If you want: send 1) your goal, 2) your context, 3) the deadline. I’ll reply with next steps."
+                        : "Se quiser: envie 1) seu objetivo, 2) contexto, 3) prazo. Eu respondo com próximos passos."}
+                    </div>
+                  </div>
                 </div>
-                <div className="p-6 border rounded-3xl shadow-sm bg-gray-50">
-                  <h3 className="font-medium">Próximos passos</h3>
-                  <ol className="mt-3 space-y-2 text-gray-700 list-decimal list-inside">
-                    {t.contact.steps.map((s, i) => (
-                      <li key={i}>{s}</li>
-                    ))}
-                  </ol>
-                  <a
-                    href="#"
-                    className="mt-4 inline-flex rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
-                  >
-                    {t.hero.cta1}
-                  </a>
-                </div>
-              </div>
+              </Container>
             </section>
 
-            <footer className="border-t">
-              <div className="max-w-6xl mx-auto px-4 py-10 text-sm text-gray-600 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
-                <div>
-                  {t.footer.rights} {new Date().getFullYear()} Aline da Silva Souza. All rights reserved.
+            {/* Footer */}
+            <footer className="border-t border-line py-10">
+              <Container>
+                <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between text-sm text-text-300">
+                  <div>
+                    © {new Date().getFullYear()} Aline da Silva Souza. {t.footer.rights}
+                  </div>
+                  <div className="flex gap-4">
+                    <a className="hover:text-text-100" href="#">Privacy</a>
+                    <a className="hover:text-text-100" href="#">Terms</a>
+                    <a className="hover:text-text-100" href="#">LinkedIn</a>
+                    <a className="hover:text-text-100" href="#">Instagram</a>
+                  </div>
                 </div>
-                <div className="flex gap-4">
-                  <a href="#" className="hover:opacity-70">Privacy</a>
-                  <a href="#" className="hover:opacity-70">Terms</a>
-                  <a href="#" className="hover:opacity-70">LinkedIn</a>
-                  <a href="#" className="hover:opacity-70">Instagram</a>
-                </div>
-              </div>
+              </Container>
             </footer>
           </div>
         );
       }
 
-      // ===== RENDER =====
       const root = ReactDOM.createRoot(document.getElementById("root"));
       root.render(<LandingAline />);
     </script>
