@@ -55,11 +55,11 @@
       /* crisp borders */
       .hairline { border: 1px solid rgba(11,15,26,.12); }
 
-      /* Dark glass used in hero/cards */
+      /* Dark panel aligned to logo (deeper, less gray) */
       .panel-dark{
-        background: rgba(10,14,26,.62);
-        border: 1px solid rgba(53,227,255,.18);
-        box-shadow: 0 22px 70px rgba(0,0,0,.35);
+        background: linear-gradient(145deg, #0B0F1A 0%, #0F1629 60%, #111C33 100%);
+        border: 1px solid rgba(53,227,255,.22);
+        box-shadow: 0 25px 80px rgba(0,0,0,.45);
         backdrop-filter: blur(14px);
       }
 
@@ -346,7 +346,7 @@
               </div>
             </header>
 
-            {/* HERO (dark neon, aligned with logo) */}
+            {/* HERO */}
             <section className="relative overflow-hidden">
               <div className="absolute inset-0">
                 <img src="./assets/img/hero-01.jpg" alt="" className="h-full w-full object-cover" />
@@ -379,6 +379,7 @@
                   </div>
                 </div>
 
+                {/* How I work card (now aligned to logo-dark background) */}
                 <div className="panel-dark rounded-xl p-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -534,10 +535,20 @@
                     <div className="font-semibold">Spotify</div>
                     <p className="mt-2 text-sm text-ink/70">{t.podcasts.hint}</p>
                   </div>
-                  <div className="panel-light rounded-xl p-6">
-                    <div className="font-semibold">YouTube</div>
-                    <p className="mt-2 text-sm text-ink/70">{t.podcasts.hint}</p>
-                  </div>
+                 <div className="panel-light rounded-xl p-6">
+                   <div className="font-semibold">YouTube</div>
+                   <p className="mt-2 text-sm text-ink/70">
+                     {lang==="en" ? "Watch the podcast on YouTube." : "Assista ao podcast no YouTube."}
+                   </p>
+                   <a
+                     href={youtubePodcastsUrl}
+                     target="_blank"
+                     rel="noreferrer"
+                     className="mt-4 inline-flex rounded-lg px-4 py-2 btn-primary text-sm font-medium"
+                     >
+                     {lang==="en" ? "Open YouTube" : "Abrir YouTube"}
+                   </a>
+                 </div>
                 </div>
               </div>
             </section>
