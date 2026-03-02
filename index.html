@@ -7,7 +7,7 @@
 
     <link rel="icon" type="image/png" href="./assets/brand/favicon.png" />
 
-    <!-- Tailwind theme (MUST come before tailwindcdn script) -->
+    <!-- Tailwind theme (must come before tailwindcdn script) -->
     <script>
       tailwind = window.tailwind || {};
       tailwind.config = {
@@ -22,7 +22,9 @@
               glass2: "rgba(255,255,255,.80)",
               neonC: "#35E3FF",
               neonP: "#6A63FF",
-              neonG: "#24F1B6"
+              neonG: "#24F1B6",
+              // base escura alinhada com a logo dark
+              logoDark: "#0B0F1A"
             },
             boxShadow: {
               soft: "0 14px 50px rgba(11,15,26,.12)",
@@ -52,14 +54,13 @@
       :root { color-scheme: light; }
       body { background: #F7F8FC; }
 
-      /* crisp borders */
       .hairline { border: 1px solid rgba(11,15,26,.12); }
 
-      /* Dark panel aligned to logo (deeper, less gray) */
+      /* Dark glass used in hero/cards */
       .panel-dark{
-        background: linear-gradient(145deg, #0B0F1A 0%, #0F1629 60%, #111C33 100%);
-        border: 1px solid rgba(53,227,255,.22);
-        box-shadow: 0 25px 80px rgba(0,0,0,.45);
+        background: rgba(11,15,26,.88); /* mais “logo dark” */
+        border: 1px solid rgba(53,227,255,.18);
+        box-shadow: 0 22px 70px rgba(0,0,0,.35);
         backdrop-filter: blur(14px);
       }
 
@@ -86,13 +87,11 @@
 
       .link:hover{ opacity:.82; }
 
-      /* Top bar accent line in logo palette */
       .top-accent{
         height: 3px;
         background: linear-gradient(90deg, rgba(53,227,255,1), rgba(106,99,255,1), rgba(36,241,182,1));
       }
 
-      /* Light sections have subtle neon whisper */
       .soft-wash{
         background:
           radial-gradient(900px 340px at 20% 0%, rgba(53,227,255,.10), transparent 55%),
@@ -172,6 +171,7 @@
 
         const linkedinUrl = "https://www.linkedin.com/in/alinedatascientist/";
         const emailTo = "alinedatascientst@gmail.com";
+        const youtubePodcastsUrl = "https://www.youtube.com/@alinedatascientist/podcasts";
 
         const articles = [
           {
@@ -216,7 +216,7 @@
               note: "Mentoring is a structured conversation: clarity, positioning, and a 90-day execution plan.",
               coursesTitle: "Courses (Data & AI professionals)",
               coursesDesc: "Short, practical programs for professionals who want clarity, structure, and execution.",
-              coursesCta: "Coming soon"
+              coursesCta: "Explore courses"
             },
             speaking: {
               title: "Keynote Speaker & Events",
@@ -234,7 +234,7 @@
               ]
             },
             articles: { title:"Articles", desc:"Published on LinkedIn. Featured reads:", cta:"Read on LinkedIn", all:"See all on LinkedIn" },
-            podcasts: { title:"Podcasts", desc:"Listen on Spotify and watch on YouTube.", hint:"Add your Spotify/YouTube embeds later." },
+            podcasts: { title:"Podcasts", desc:"Listen on Spotify and watch on YouTube.", cta:"Open YouTube" },
             contact: { title:"Contact", desc:"Companies: services. Individuals: mentoring. Events: speaking.", cta:"Send message", name:"Name", msg:"Message" },
             labels: { language:"Language" }
           },
@@ -265,7 +265,7 @@
               note: "A mentoria é uma conversa estruturada: clareza, posicionamento e um plano de execução de 90 dias.",
               coursesTitle: "Cursos (Profissionais de Dados & IA)",
               coursesDesc: "Programas curtos e práticos para quem quer clareza, estrutura e execução.",
-              coursesCta: "Coming soon"
+              coursesCta: "Ver cursos"
             },
             speaking: {
               title: "Keynote Speaker & Eventos",
@@ -283,7 +283,7 @@
               ]
             },
             articles: { title:"Artigos", desc:"Publicados no LinkedIn. Leituras em destaque:", cta:"Ler no LinkedIn", all:"Ver tudo no LinkedIn" },
-            podcasts: { title:"Podcasts", desc:"Ouça no Spotify e assista no YouTube.", hint:"Adicione os embeds de Spotify/YouTube depois." },
+            podcasts: { title:"Podcasts", desc:"Ouça no Spotify e assista no YouTube.", cta:"Abrir YouTube" },
             contact: { title:"Contato", desc:"Empresas: serviços. Pessoas: mentoria. Eventos: palestras.", cta:"Enviar mensagem", name:"Nome", msg:"Mensagem" },
             labels: { language:"Idioma" }
           }
@@ -379,7 +379,6 @@
                   </div>
                 </div>
 
-                {/* How I work card (now aligned to logo-dark background) */}
                 <div className="panel-dark rounded-xl p-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -407,7 +406,7 @@
               </div>
             </section>
 
-            {/* MENTORING (first) */}
+            {/* MENTORING */}
             <section id="mentoring" className="border-t border-black/5 bg-white">
               <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
                 <div>
@@ -428,6 +427,7 @@
                     </a>
                   </div>
 
+                  {/* Courses (separado, com coming soon via alert) */}
                   <div className="mt-8 panel-light rounded-xl p-6">
                     <div className="font-semibold tracking-tight">{t.mentoring.coursesTitle}</div>
                     <p className="mt-2 text-sm text-ink/70">{t.mentoring.coursesDesc}</p>
@@ -460,7 +460,7 @@
               </div>
             </section>
 
-            {/* SPEAKING (second) */}
+            {/* SPEAKING */}
             <section id="speaking" className="soft-wash border-t border-black/5">
               <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
                 <div>
@@ -524,7 +524,7 @@
               </div>
             </section>
 
-            {/* PODCASTS */}
+            {/* PODCASTS (with YouTube link) */}
             <section id="podcasts" className="soft-wash border-t border-black/5">
               <div className="max-w-6xl mx-auto px-4 py-14">
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.podcasts.title}</h2>
@@ -533,22 +533,32 @@
                 <div className="mt-6 grid md:grid-cols-2 gap-6">
                   <div className="panel-light rounded-xl p-6">
                     <div className="font-semibold">Spotify</div>
-                    <p className="mt-2 text-sm text-ink/70">{t.podcasts.hint}</p>
+                    <p className="mt-2 text-sm text-ink/70">
+                      {lang==="en" ? "Spotify embed will be added soon." : "O embed do Spotify será adicionado em breve."}
+                    </p>
+                    <a
+                      href="#"
+                      onClick={(e)=>{ e.preventDefault(); window.alert("Coming soon"); }}
+                      className="mt-4 inline-flex rounded-lg px-4 py-2 btn-primary text-sm font-medium"
+                    >
+                      {lang==="en" ? "Coming soon" : "Em breve"}
+                    </a>
                   </div>
-                 <div className="panel-light rounded-xl p-6">
-                   <div className="font-semibold">YouTube</div>
-                   <p className="mt-2 text-sm text-ink/70">
-                     {lang==="en" ? "Watch the podcast on YouTube." : "Assista ao podcast no YouTube."}
-                   </p>
-                   <a
-                     href={youtubePodcastsUrl}
-                     target="_blank"
-                     rel="noreferrer"
-                     className="mt-4 inline-flex rounded-lg px-4 py-2 btn-primary text-sm font-medium"
-                     >
-                     {lang==="en" ? "Open YouTube" : "Abrir YouTube"}
-                   </a>
-                 </div>
+
+                  <div className="panel-light rounded-xl p-6">
+                    <div className="font-semibold">YouTube</div>
+                    <p className="mt-2 text-sm text-ink/70">
+                      {lang==="en" ? "Watch the podcast on YouTube." : "Assista ao podcast no YouTube."}
+                    </p>
+                    <a
+                      href={youtubePodcastsUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-4 inline-flex rounded-lg px-4 py-2 btn-primary text-sm font-medium"
+                    >
+                      {t.podcasts.cta}
+                    </a>
+                  </div>
                 </div>
               </div>
             </section>
