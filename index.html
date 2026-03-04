@@ -78,10 +78,17 @@
       }
 
       .btn-primary{
-        color: #0B0F1A;
         background: linear-gradient(90deg, rgba(11,218,132,.95), rgba(115,38,115,.95));
+        color: #FFFFFF !important;   /* texto branco */
       }
-      .btn-primary:hover{ opacity:.92; }
+      
+      .btn-primary *{
+        color: #FFFFFF !important;   /* garante branco dentro do botão */
+      }
+      
+      .btn-primary:hover{
+        opacity: .92;
+      }
 
       .btn-ghost{
         background: transparent;
