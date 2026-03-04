@@ -24,11 +24,11 @@
             colors: {
               ink: "#0B0F1A",
               paper: "#F7F8FC",
-              brandD: "#471F47",   // deep purple
-              brandP: "#732673",   // purple
-              brandG: "#0BDA84",   // neon green
+              brandD: "#471F47",   /* deep purple */
+              brandP: "#732673",   /* purple */
+              brandG: "#0BDA84",   /* neon green */
               brandW: "#FFFFFF",
-              line2: "rgba(11,15,26,.10)",
+              line2: "rgba(11,15,26,.10)"
             },
             boxShadow: {
               soft: "0 14px 50px rgba(11,15,26,.12)",
@@ -81,11 +81,11 @@
         background: linear-gradient(90deg, rgba(11,218,132,.95), rgba(115,38,115,.95));
         color: #FFFFFF !important;   /* texto branco */
       }
-      
+
       .btn-primary *{
         color: #FFFFFF !important;   /* garante branco dentro do botão */
       }
-      
+
       .btn-primary:hover{
         opacity: .92;
       }
@@ -145,7 +145,7 @@
           </a>
         );
       }
- 
+
       function CardLight({ title, desc, bullets, cta, href, comingSoon }) {
         const handleClick = (e) => {
           if (!comingSoon) return;
@@ -224,7 +224,7 @@
 
         const dict = {
           en: {
-            brand: "Aline — Human-Centered AI",
+            brand: "Human-Centered AI",
             nav: { mentoring:"Mentoring", speaking:"Speaking", services:"Core services", articles:"Articles", podcasts:"Podcasts", contact:"Contact" },
             hero: {
               pre: "STRATEGY • GOVERNANCE • VALUE",
@@ -273,7 +273,7 @@
             labels: { language:"Language" }
           },
           pt: {
-            brand: "Aline — IA Humanizada",
+            brand: "IA Humanizada",
             nav: { mentoring:"Mentoria", speaking:"Palestras", services:"Serviços", articles:"Artigos", podcasts:"Podcasts", contact:"Contato" },
             hero: {
               pre: "ESTRATÉGIA • GOVERNANÇA • VALOR",
@@ -418,14 +418,21 @@
                   </div>
                 </div>
 
-                {/* How I work card (dark of logo) */}
+                {/* How I work card (FIXED spacing so logo doesn't eat the title) */}
                 <div className="panel-dark rounded-xl p-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <img src="./assets/brand/logo-dark.png" alt="Aline Data Scientist" className="h-12 w-auto" />
-                      <div className="font-semibold">{t.philosophy.title}</div>
+                  <div className="flex items-start justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                      <img
+                        src="./assets/brand/logo-dark.png"
+                        alt="Aline Data Scientist"
+                        className="h-12 w-auto shrink-0"
+                      />
+                      <div className="font-semibold mt-2 sm:mt-0">
+                        {t.philosophy.title}
+                      </div>
                     </div>
-                    <div className="flex gap-2">
+
+                    <div className="flex gap-2 pt-1">
                       <span className="h-2 w-2 rounded-full bg-brandG/95"></span>
                       <span className="h-2 w-2 rounded-full bg-brandP/95"></span>
                       <span className="h-2 w-2 rounded-full bg-white/90"></span>
@@ -461,7 +468,6 @@
                     ))}
                   </ul>
 
-                  {/* (Removed the extra "Coming soon" button from mentoring) */}
                   <div className="mt-6 flex flex-wrap gap-3">
                     <a href="#contact" className="inline-flex rounded-lg px-5 py-3 btn-primary text-sm font-medium">
                       {t.mentoring.cta}
