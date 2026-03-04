@@ -7,24 +7,28 @@
 
     <link rel="icon" type="image/png" href="./assets/brand/favicon.png" />
 
-    <!-- Tailwind theme (must come before tailwindcdn script) -->
+    <!-- Font (Public Sans - brand guideline) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind theme (MUST come before tailwindcdn script) -->
     <script>
       tailwind = window.tailwind || {};
       tailwind.config = {
         theme: {
           extend: {
+            fontFamily: {
+              sans: ['Public Sans', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'Arial']
+            },
             colors: {
               ink: "#0B0F1A",
               paper: "#F7F8FC",
-              line: "rgba(255,255,255,.10)",
+              brandD: "#471F47",   // deep purple
+              brandP: "#732673",   // purple
+              brandG: "#0BDA84",   // neon green
+              brandW: "#FFFFFF",
               line2: "rgba(11,15,26,.10)",
-              glass: "rgba(10,14,26,.62)",
-              glass2: "rgba(255,255,255,.80)",
-              neonC: "#35E3FF",
-              neonP: "#6A63FF",
-              neonG: "#24F1B6",
-              // base escura alinhada com a logo dark
-              logoDark: "#0B0F1A"
             },
             boxShadow: {
               soft: "0 14px 50px rgba(11,15,26,.12)",
@@ -52,21 +56,22 @@
 
     <style>
       :root { color-scheme: light; }
-      body { background: #F7F8FC; }
+      body { background: #F7F8FC; font-family: "Public Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial; }
 
+      /* crisp borders */
       .hairline { border: 1px solid rgba(11,15,26,.12); }
 
-      /* Dark glass used in hero/cards */
+      /* Dark panel: match deep purple from logo */
       .panel-dark{
-        background: rgba(11,15,26,.88); /* mais “logo dark” */
-        border: 1px solid rgba(53,227,255,.18);
+        background: rgba(71,31,71,.86); /* #471F47 */
+        border: 1px solid rgba(11,218,132,.22); /* brand green glow */
         box-shadow: 0 22px 70px rgba(0,0,0,.35);
         backdrop-filter: blur(14px);
       }
 
       /* Light elegant cards */
       .panel-light{
-        background: rgba(255,255,255,.86);
+        background: rgba(255,255,255,.88);
         border: 1px solid rgba(11,15,26,.10);
         box-shadow: 0 14px 50px rgba(11,15,26,.10);
         backdrop-filter: blur(10px);
@@ -74,28 +79,44 @@
 
       .btn-primary{
         color: #0B0F1A;
-        background: linear-gradient(90deg, rgba(53,227,255,.95), rgba(106,99,255,.95));
+        background: linear-gradient(90deg, rgba(11,218,132,.95), rgba(115,38,115,.95));
       }
       .btn-primary:hover{ opacity:.92; }
 
       .btn-ghost{
         background: transparent;
-        border: 1px solid rgba(255,255,255,.22);
+        border: 1px solid rgba(255,255,255,.24);
         color:#fff;
       }
       .btn-ghost:hover{ background: rgba(255,255,255,.08); }
 
       .link:hover{ opacity:.82; }
 
+      /* Top bar accent line in brand palette */
       .top-accent{
         height: 3px;
-        background: linear-gradient(90deg, rgba(53,227,255,1), rgba(106,99,255,1), rgba(36,241,182,1));
+        background: linear-gradient(90deg, #0BDA84, #732673, #FFFFFF);
       }
 
+      /* Brand support pattern: subtle rectangles (from brand system) */
+      .support-pattern{
+        background:
+          linear-gradient(0deg, rgba(0,0,0,.0), rgba(0,0,0,.0)),
+          repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,.06) 0px,
+            rgba(255,255,255,.06) 10px,
+            rgba(255,255,255,0) 10px,
+            rgba(255,255,255,0) 58px
+          );
+        mask-image: radial-gradient(70% 60% at 55% 45%, rgba(0,0,0,1), rgba(0,0,0,.25) 65%, rgba(0,0,0,0) 100%);
+      }
+
+      /* Light sections with “executive tech” wash */
       .soft-wash{
         background:
-          radial-gradient(900px 340px at 20% 0%, rgba(53,227,255,.10), transparent 55%),
-          radial-gradient(900px 340px at 80% 30%, rgba(106,99,255,.10), transparent 55%),
+          radial-gradient(900px 340px at 18% 0%, rgba(11,218,132,.12), transparent 55%),
+          radial-gradient(900px 340px at 82% 28%, rgba(115,38,115,.12), transparent 55%),
           linear-gradient(180deg, #F7F8FC, #FFFFFF);
       }
     </style>
@@ -141,6 +162,7 @@
                 </ul>
               ) : null}
             </div>
+
             <a
               href={href || "#contact"}
               onClick={handleClick}
@@ -159,7 +181,12 @@
           <div className="panel-light rounded-xl p-6">
             <div className="text-xs tracking-widest uppercase text-ink/50">LinkedIn</div>
             <div className="mt-2 font-semibold tracking-tight">{title}</div>
-            <a href={url} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-lg px-4 py-2 hairline bg-white text-sm hover:bg-black/5">
+            <a
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 inline-flex rounded-lg px-4 py-2 hairline bg-white text-sm hover:bg-black/5"
+            >
               {cta}
             </a>
           </div>
@@ -216,7 +243,7 @@
               note: "Mentoring is a structured conversation: clarity, positioning, and a 90-day execution plan.",
               coursesTitle: "Courses (Data & AI professionals)",
               coursesDesc: "Short, practical programs for professionals who want clarity, structure, and execution.",
-              coursesCta: "Explore courses"
+              coursesCta: "Coming soon"
             },
             speaking: {
               title: "Keynote Speaker & Events",
@@ -234,7 +261,7 @@
               ]
             },
             articles: { title:"Articles", desc:"Published on LinkedIn. Featured reads:", cta:"Read on LinkedIn", all:"See all on LinkedIn" },
-            podcasts: { title:"Podcasts", desc:"Listen on Spotify and watch on YouTube.", cta:"Open YouTube" },
+            podcasts: { title:"Podcasts", desc:"Listen on Spotify and watch on YouTube.", yt:"YouTube Podcasts", open:"Open", hint:"Add Spotify embed later if you want." },
             contact: { title:"Contact", desc:"Companies: services. Individuals: mentoring. Events: speaking.", cta:"Send message", name:"Name", msg:"Message" },
             labels: { language:"Language" }
           },
@@ -265,7 +292,7 @@
               note: "A mentoria é uma conversa estruturada: clareza, posicionamento e um plano de execução de 90 dias.",
               coursesTitle: "Cursos (Profissionais de Dados & IA)",
               coursesDesc: "Programas curtos e práticos para quem quer clareza, estrutura e execução.",
-              coursesCta: "Ver cursos"
+              coursesCta: "Coming soon"
             },
             speaking: {
               title: "Keynote Speaker & Eventos",
@@ -283,7 +310,7 @@
               ]
             },
             articles: { title:"Artigos", desc:"Publicados no LinkedIn. Leituras em destaque:", cta:"Ler no LinkedIn", all:"Ver tudo no LinkedIn" },
-            podcasts: { title:"Podcasts", desc:"Ouça no Spotify e assista no YouTube.", cta:"Abrir YouTube" },
+            podcasts: { title:"Podcasts", desc:"Ouça no Spotify e assista no YouTube.", yt:"Podcasts no YouTube", open:"Abrir", hint:"Se quiser, depois eu coloco o embed do Spotify." },
             contact: { title:"Contato", desc:"Empresas: serviços. Pessoas: mentoria. Eventos: palestras.", cta:"Enviar mensagem", name:"Nome", msg:"Mensagem" },
             labels: { language:"Idioma" }
           }
@@ -308,7 +335,7 @@
         }
 
         return (
-          <div className="min-h-screen">
+          <div className="min-h-screen font-sans">
             <div className="top-accent"></div>
 
             {/* Header */}
@@ -350,9 +377,14 @@
             <section className="relative overflow-hidden">
               <div className="absolute inset-0">
                 <img src="./assets/img/hero-01.jpg" alt="" className="h-full w-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/45 to-black/80"></div>
-                <div className="absolute -top-24 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-neonC/20 blur-3xl"></div>
-                <div className="absolute -bottom-28 left-10 h-[420px] w-[420px] rounded-full bg-neonP/18 blur-3xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/40 to-black/80"></div>
+
+                {/* brand glows */}
+                <div className="absolute -top-24 left-1/2 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-brandG/20 blur-3xl"></div>
+                <div className="absolute -bottom-32 left-10 h-[440px] w-[440px] rounded-full bg-brandP/18 blur-3xl"></div>
+
+                {/* support pattern overlay */}
+                <div className="absolute inset-0 support-pattern opacity-[0.55]"></div>
               </div>
 
               <div className="relative max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center text-white">
@@ -370,15 +402,16 @@
                     </a>
                   </div>
 
-                  <div className="mt-8 grid gap-2 text-sm text-white/75">
+                  <div className="mt-8 grid gap-2 text-sm text-white/80">
                     {t.philosophy.items.map((x, i) => (
                       <div key={i} className="flex gap-2">
-                        <span className="text-white/50">•</span><span>{x}</span>
+                        <span className="text-white/55">•</span><span>{x}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
+                {/* How I work card (dark of logo) */}
                 <div className="panel-dark rounded-xl p-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -386,22 +419,22 @@
                       <div className="font-semibold">{t.philosophy.title}</div>
                     </div>
                     <div className="flex gap-2">
-                      <span className="h-2 w-2 rounded-full bg-neonC/90"></span>
-                      <span className="h-2 w-2 rounded-full bg-neonP/90"></span>
-                      <span className="h-2 w-2 rounded-full bg-neonG/90"></span>
+                      <span className="h-2 w-2 rounded-full bg-brandG/95"></span>
+                      <span className="h-2 w-2 rounded-full bg-brandP/95"></span>
+                      <span className="h-2 w-2 rounded-full bg-white/90"></span>
                     </div>
                   </div>
 
-                  <ul className="mt-4 space-y-2 text-white/80 text-sm">
+                  <ul className="mt-4 space-y-2 text-white/85 text-sm">
                     {t.philosophy.items.map((it, i) => (
                       <li key={i} className="flex gap-2">
-                        <span className="text-white/50">•</span>
+                        <span className="text-white/55">•</span>
                         <span>{it}</span>
                       </li>
                     ))}
                   </ul>
 
-                  <div className="mt-6 text-xs uppercase tracking-widest text-white/55">{t.philosophy.foot}</div>
+                  <div className="mt-6 text-xs uppercase tracking-widest text-white/60">{t.philosophy.foot}</div>
                 </div>
               </div>
             </section>
@@ -421,21 +454,24 @@
                     ))}
                   </ul>
 
+                  {/* (Removed the extra "Coming soon" button from mentoring) */}
                   <div className="mt-6 flex flex-wrap gap-3">
                     <a href="#contact" className="inline-flex rounded-lg px-5 py-3 btn-primary text-sm font-medium">
                       {t.mentoring.cta}
                     </a>
                   </div>
 
-                  {/* Courses (separado, com coming soon via alert) */}
+                  {/* Courses (Data & AI) - clickable, alert "Coming soon" */}
                   <div className="mt-8 panel-light rounded-xl p-6">
                     <div className="font-semibold tracking-tight">{t.mentoring.coursesTitle}</div>
                     <p className="mt-2 text-sm text-ink/70">{t.mentoring.coursesDesc}</p>
+
                     <div className="mt-4 grid gap-2 text-sm text-ink/75">
                       <div className="flex gap-2"><span className="text-ink/35">•</span><span>AI Literacy for Leaders</span></div>
                       <div className="flex gap-2"><span className="text-ink/35">•</span><span>ML Canvas → Value (practical)</span></div>
                       <div className="flex gap-2"><span className="text-ink/35">•</span><span>Governance that ships</span></div>
                     </div>
+
                     <a
                       href="#"
                       onClick={(e)=>{ e.preventDefault(); window.alert("Coming soon"); }}
@@ -524,7 +560,7 @@
               </div>
             </section>
 
-            {/* PODCASTS (with YouTube link) */}
+            {/* PODCASTS */}
             <section id="podcasts" className="soft-wash border-t border-black/5">
               <div className="max-w-6xl mx-auto px-4 py-14">
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.podcasts.title}</h2>
@@ -533,22 +569,13 @@
                 <div className="mt-6 grid md:grid-cols-2 gap-6">
                   <div className="panel-light rounded-xl p-6">
                     <div className="font-semibold">Spotify</div>
-                    <p className="mt-2 text-sm text-ink/70">
-                      {lang==="en" ? "Listen the podcast on Spotify." : "Ouça ao podcast no Spotify."}
-                    </p>
-                    <a
-                      href="#"
-                      onClick={(e)=>{ e.preventDefault(); window.alert("Coming soon"); }}
-                      className="mt-4 inline-flex rounded-lg px-4 py-2 btn-primary text-sm font-medium"
-                    >
-                      {lang==="en" ? "Coming soon" : "Em breve"}
-                    </a>
+                    <p className="mt-2 text-sm text-ink/70">{t.podcasts.hint}</p>
                   </div>
 
                   <div className="panel-light rounded-xl p-6">
-                    <div className="font-semibold">YouTube</div>
+                    <div className="font-semibold">{t.podcasts.yt}</div>
                     <p className="mt-2 text-sm text-ink/70">
-                      {lang==="en" ? "Watch the podcast on YouTube." : "Assista ao podcast no YouTube."}
+                      {lang==="en" ? "Full list of podcast episodes on YouTube." : "Lista completa dos episódios no YouTube."}
                     </p>
                     <a
                       href={youtubePodcastsUrl}
@@ -556,7 +583,7 @@
                       rel="noreferrer"
                       className="mt-4 inline-flex rounded-lg px-4 py-2 btn-primary text-sm font-medium"
                     >
-                      {t.podcasts.cta}
+                      {t.podcasts.open}
                     </a>
                   </div>
                 </div>
@@ -609,6 +636,7 @@
                 <div>© {new Date().getFullYear()} Aline da Silva Souza. All rights reserved.</div>
                 <div className="flex gap-4 flex-wrap">
                   <a className="link" href={linkedinUrl} target="_blank" rel="noreferrer">LinkedIn</a>
+                  <a className="link" href={youtubePodcastsUrl} target="_blank" rel="noreferrer">YouTube</a>
                 </div>
               </div>
             </footer>
