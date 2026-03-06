@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind theme (MUST come before tailwindcdn script) -->
+    <!-- Tailwind theme -->
     <script>
       tailwind = window.tailwind || {};
       tailwind.config = {
@@ -24,9 +24,9 @@
             colors: {
               ink: "#0B0F1A",
               paper: "#F7F8FC",
-              brandD: "#471F47",   /* deep purple */
-              brandP: "#732673",   /* purple */
-              brandG: "#0BDA84",   /* neon green */
+              brandD: "#471F47",
+              brandP: "#732673",
+              brandG: "#0BDA84",
               brandW: "#FFFFFF",
               line2: "rgba(11,15,26,.10)"
             },
@@ -44,32 +44,24 @@
       };
     </script>
 
-    <!-- Tailwind (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- React 18 (UMD) -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-    <!-- Babel (JSX no navegador) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
       :root { color-scheme: light; }
       body { background: #F7F8FC; font-family: "Public Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial; }
 
-      /* crisp borders */
       .hairline { border: 1px solid rgba(11,15,26,.12); }
 
-      /* Dark panel: match deep purple from logo */
       .panel-dark{
-        background: rgba(71,31,71,.86); /* #471F47 */
-        border: 1px solid rgba(11,218,132,.22); /* brand green glow */
+        background: rgba(71,31,71,.86);
+        border: 1px solid rgba(11,218,132,.22);
         box-shadow: 0 22px 70px rgba(0,0,0,.35);
         backdrop-filter: blur(14px);
       }
 
-      /* Light elegant cards */
       .panel-light{
         background: rgba(255,255,255,.88);
         border: 1px solid rgba(11,15,26,.10);
@@ -79,11 +71,11 @@
 
       .btn-primary{
         background: linear-gradient(90deg, rgba(11,218,132,.95), rgba(115,38,115,.95));
-        color: #FFFFFF !important;   /* texto branco */
+        color: #FFFFFF !important;
       }
 
       .btn-primary *{
-        color: #FFFFFF !important;   /* garante branco dentro do botão */
+        color: #FFFFFF !important;
       }
 
       .btn-primary:hover{
@@ -99,13 +91,11 @@
 
       .link:hover{ opacity:.82; }
 
-      /* Top bar accent line in brand palette */
       .top-accent{
         height: 3px;
         background: linear-gradient(90deg, #0BDA84, #732673, #FFFFFF);
       }
 
-      /* Brand support pattern: subtle rectangles (from brand system) */
       .support-pattern{
         background:
           linear-gradient(0deg, rgba(0,0,0,.0), rgba(0,0,0,.0)),
@@ -119,7 +109,6 @@
         mask-image: radial-gradient(70% 60% at 55% 45%, rgba(0,0,0,1), rgba(0,0,0,.25) 65%, rgba(0,0,0,0) 100%);
       }
 
-      /* Light sections with “executive tech” wash */
       .soft-wash{
         background:
           radial-gradient(900px 340px at 18% 0%, rgba(11,218,132,.12), transparent 55%),
@@ -225,7 +214,7 @@
         const dict = {
           en: {
             brand: "Human-Centered AI",
-            nav: { mentoring:"Mentoring", speaking:"Speaking", services:"Core services", articles:"Articles", podcasts:"Podcasts", contact:"Contact" },
+            nav: { mentoring:"Mentoring", speaking:"Speaking", podcasts:"Podcasts", services:"Consulting services", articles:"Articles", contact:"Contact" },
             hero: {
               pre: "STRATEGY • GOVERNANCE • VALUE",
               title: "Human-centered AI for leaders who want real impact.",
@@ -258,7 +247,7 @@
               cta: "Invite me to speak"
             },
             services: {
-              title: "Core services",
+              title: "Consulting services",
               hint: "In progress — structured offers will be published soon.",
               cta: "Coming soon",
               cards: [
@@ -274,7 +263,7 @@
           },
           pt: {
             brand: "IA Humanizada",
-            nav: { mentoring:"Mentoria", speaking:"Palestras", services:"Serviços", articles:"Artigos", podcasts:"Podcasts", contact:"Contato" },
+            nav: { mentoring:"Mentoria", speaking:"Palestras", podcasts:"Podcasts", services:"Consulting services", articles:"Artigos", contact:"Contato" },
             hero: {
               pre: "ESTRATÉGIA • GOVERNANÇA • VALOR",
               title: "IA humanizada para líderes que buscam impacto real.",
@@ -307,7 +296,7 @@
               cta: "Me convide para palestrar"
             },
             services: {
-              title: "Core services",
+              title: "Consulting services",
               hint: "Em construção — os pacotes serão publicados em breve.",
               cta: "Coming soon",
               cards: [
@@ -356,9 +345,9 @@
                 <nav className="hidden md:flex items-center gap-6 text-sm text-ink/75">
                   <a className="link" href="#mentoring">{t.nav.mentoring}</a>
                   <a className="link" href="#speaking">{t.nav.speaking}</a>
+                  <a className="link" href="#podcasts">{t.nav.podcasts}</a>
                   <a className="link" href="#services">{t.nav.services}</a>
                   <a className="link" href="#articles">{t.nav.articles}</a>
-                  <a className="link" href="#podcasts">{t.nav.podcasts}</a>
                   <a className="link" href="#contact">{t.nav.contact}</a>
                 </nav>
 
@@ -386,11 +375,8 @@
                 <img src="./assets/img/hero-01.jpg" alt="" className="h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/40 to-black/80"></div>
 
-                {/* brand glows */}
                 <div className="absolute -top-24 left-1/2 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-brandG/20 blur-3xl"></div>
                 <div className="absolute -bottom-32 left-10 h-[440px] w-[440px] rounded-full bg-brandP/18 blur-3xl"></div>
-
-                {/* support pattern overlay */}
                 <div className="absolute inset-0 support-pattern opacity-[0.55]"></div>
               </div>
 
@@ -418,7 +404,6 @@
                   </div>
                 </div>
 
-                {/* How I work card (FIXED spacing so logo doesn't eat the title) */}
                 <div className="panel-dark rounded-xl p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-3">
@@ -470,16 +455,15 @@
 
                   <div className="mt-6 flex flex-wrap gap-3">
                     <a 
-                      href="https://form.typeform.com/to/XuzHih0r"  
-                      target="_blank"  
-                      rel="noreferrer"  
+                      href="https://form.typeform.com/to/XuzHih0r"
+                      target="_blank"
+                      rel="noreferrer"
                       className="inline-flex rounded-lg px-5 py-3 btn-primary text-sm font-medium"
-                      >
+                    >
                       {t.mentoring.cta}
                     </a>
                   </div>
 
-                  {/* Courses (Data & AI) - clickable, alert "Coming soon" */}
                   <div className="mt-8 panel-light rounded-xl p-6">
                     <div className="font-semibold tracking-tight">{t.mentoring.coursesTitle}</div>
                     <p className="mt-2 text-sm text-ink/70">{t.mentoring.coursesDesc}</p>
@@ -534,7 +518,37 @@
               </div>
             </section>
 
-            {/* CORE SERVICES (after speaking; in progress) */}
+            {/* PODCASTS */}
+            <section id="podcasts" className="soft-wash border-t border-black/5">
+              <div className="max-w-6xl mx-auto px-4 py-14">
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.podcasts.title}</h2>
+                <p className="mt-2 text-ink/70">{t.podcasts.desc}</p>
+
+                <div className="mt-6 grid md:grid-cols-2 gap-6">
+                  <div className="panel-light rounded-xl p-6">
+                    <div className="font-semibold">Spotify</div>
+                    <p className="mt-2 text-sm text-ink/70">{t.podcasts.hint}</p>
+                  </div>
+
+                  <div className="panel-light rounded-xl p-6">
+                    <div className="font-semibold">{t.podcasts.yt}</div>
+                    <p className="mt-2 text-sm text-ink/70">
+                      {lang==="en" ? "Full list of podcast episodes on YouTube." : "Lista completa dos episódios no YouTube."}
+                    </p>
+                    <a
+                      href={youtubePodcastsUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-4 inline-flex rounded-lg px-4 py-2 btn-primary text-sm font-medium"
+                    >
+                      {t.podcasts.open}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* CONSULTING SERVICES */}
             <section id="services" className="soft-wash border-t border-black/5">
               <div className="max-w-6xl mx-auto px-4 py-14">
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
@@ -578,37 +592,7 @@
               </div>
             </section>
 
-            {/* PODCASTS */}
-            <section id="podcasts" className="soft-wash border-t border-black/5">
-              <div className="max-w-6xl mx-auto px-4 py-14">
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{t.podcasts.title}</h2>
-                <p className="mt-2 text-ink/70">{t.podcasts.desc}</p>
-
-                <div className="mt-6 grid md:grid-cols-2 gap-6">
-                  <div className="panel-light rounded-xl p-6">
-                    <div className="font-semibold">Spotify</div>
-                    <p className="mt-2 text-sm text-ink/70">{t.podcasts.hint}</p>
-                  </div>
-
-                  <div className="panel-light rounded-xl p-6">
-                    <div className="font-semibold">{t.podcasts.yt}</div>
-                    <p className="mt-2 text-sm text-ink/70">
-                      {lang==="en" ? "Full list of podcast episodes on YouTube." : "Lista completa dos episódios no YouTube."}
-                    </p>
-                    <a
-                      href={youtubePodcastsUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-4 inline-flex rounded-lg px-4 py-2 btn-primary text-sm font-medium"
-                    >
-                      {t.podcasts.open}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* CONTACT (mailto) */}
+            {/* CONTACT */}
             <section id="contact" className="border-t border-black/5 bg-white">
               <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-start">
                 <div>
